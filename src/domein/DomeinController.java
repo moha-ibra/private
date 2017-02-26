@@ -11,4 +11,9 @@ package domein;
  */
 public class DomeinController {
     
+    
+    public DomeinController(){
+    
+    
+    }
 }
