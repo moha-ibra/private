@@ -1,4 +1,6 @@
-package domein;
+package presentatie;
+
+import domein.DomeinController;
 
 public class StartUp {
     
