@@ -16,6 +16,7 @@ public class Speler {
     }
 
     public void setNaam(String naam) {
+        //TODO domeinregels 
         this.naam = naam;
     }
 
@@ -24,6 +25,7 @@ public class Speler {
     }
 
     public void setGeboortejaar(int geboortejaar) {
+        //TODO domeinregels 
         this.geboortejaar = geboortejaar;
     }
 
