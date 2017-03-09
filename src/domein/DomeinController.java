@@ -9,7 +9,7 @@ public class DomeinController {
     }
     
     public void maakSpeler(String naam, int geboortejaar) {
-        speler = new Speler(naam, geboortejaar);
+        this.speler = new Speler(naam, geboortejaar);
     }
     
     // Maak een array van speler info, en print in een zin

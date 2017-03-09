@@ -1,5 +1,9 @@
 package domein;
 
+import exceptions.VerplichtVeldException;
+import exceptions.VerplichtGeenLeestekensException;
+import exceptions.VerplichtPositiefGetalException;
+
 public class Speler {
     
     private String naam;
@@ -7,8 +11,8 @@ public class Speler {
     private double krediet;
 
     public Speler(String naam, int geboortejaar) {
-        this.naam = naam;
-        this.geboortejaar = geboortejaar;
+        setNaam(naam);
+        setGeboortejaar(geboortejaar);
     }
 
     public String getNaam() {
@@ -16,7 +20,13 @@ public class Speler {
     }
 
     public void setNaam(String naam) {
-        //TODO domeinregels 
+        if (naam == null || naam.length() == 0) {
+            throw new VerplichtVeldException("Elke speler heeft verplicht een naam.");
+        }
+        if (!naam.matches("[A-z]*")) {
+            throw new VerplichtGeenLeestekensException("Naam mag geen leestekens bevatten.");
+        }
+
         this.naam = naam;
     }
 
@@ -25,7 +35,9 @@ public class Speler {
     }
 
     public void setGeboortejaar(int geboortejaar) {
-        //TODO domeinregels 
+        if (geboortejaar < 0) {
+            throw new VerplichtPositiefGetalException("Geboortejaar mag niet negatief zijn.");
+        }
         this.geboortejaar = geboortejaar;
     }
 
