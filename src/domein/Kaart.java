@@ -1,10 +1,13 @@
 package domein;
 
+import java.util.List;
+
 public class Kaart {
     
     private int type;
     private int waarde;
     private String omschrijving;
+    private static List<Kaart> standaardStartStapel; //de standaard stapel moet niet telkens opnieuw gemaakt worden want is voor elk object hetzelfde. Vandaar static
 
     public Kaart(int type, int waarde) {
         this.type = type;

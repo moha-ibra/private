@@ -3,12 +3,14 @@ package domein;
 import exceptions.VerplichtVeldException;
 import exceptions.VerplichtGeenLeestekensException;
 import exceptions.VerplichtPositiefGetalException;
+import java.util.List;
 
 public class Speler {
     
     private String naam;
     private int geboortejaar;
     private double krediet;
+    private List<Kaart> wedstrijdStapel; //de 10 startkaarten die de Speler krijgt
 
     public Speler(String naam, int geboortejaar) {
         setNaam(naam);
