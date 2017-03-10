@@ -13,12 +13,12 @@ import java.util.List;
  * @author timalenus
  */
 public class Spel {
-    private static int WEDSTRIJD_AANTAL = 2;
+    private static final int WEDSTRIJD_AANTAL = 2;
 
     private List<Speler> geregistreerdeSpelers;
     
     public Spel() {
-        geregistreerdeSpelers = new ArrayList<Speler>();
+        geregistreerdeSpelers = new ArrayList<>();
  
     }
     
@@ -28,4 +28,8 @@ public class Spel {
             geregistreerdeSpelers.add(speler);
         }
     }  
+    
+    public List<Speler> geefGeregistreerdeSpelers() {
+       return geregistreerdeSpelers;
+    }
 }

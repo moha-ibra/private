@@ -15,6 +15,7 @@ public class Speler {
     public Speler(String naam, int geboortejaar) {
         setNaam(naam);
         setGeboortejaar(geboortejaar);
+        wedstrijdStapel = Kaart.geefKopieVanStandaardStartStapel();
     }
 
     public String getNaam() {
@@ -51,6 +52,12 @@ public class Speler {
         this.krediet = krediet;
     }
     
+    public List<Kaart> geefKaarten() {
+        return wedstrijdStapel;
+    }
+    
+    
+    //deze moeten toch niet random? Of was dit gewoon als testmethode? Ik heb de tabel die staat in UC1 met de kaarten nu toegevoegd in Kaart.java
     public Kaart geefKaart() {
         int type = (int)(Math.random()*4+1);
         int waarde = (int)(Math.random()*13+1);
