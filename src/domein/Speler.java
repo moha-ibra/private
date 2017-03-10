@@ -15,7 +15,7 @@ public class Speler {
     public Speler(String naam, int geboortejaar) {
         setNaam(naam);
         setGeboortejaar(geboortejaar);
-        wedstrijdStapel = Kaart.geefKopieVanStandaardStartStapel();
+        wedstrijdStapel = Kaart.geefKopieVanStandaardStartStapel(); //niet zeker of dit nu hier moet gebeuren of niet. In UC1 staat beschreven van wel, maar dan in UC3 vermelden ze nog eens het initialiseren van de wedstrijdstapel.
     }
 
     public String getNaam() {
