@@ -11,6 +11,7 @@ public class Speler {
     private int geboortejaar;
     private double krediet;
     private List<Kaart> wedstrijdStapel; //de 10 startkaarten die de Speler krijgt
+  
 
     public Speler(String naam, int geboortejaar) {
         setNaam(naam);
@@ -56,6 +57,15 @@ public class Speler {
         return wedstrijdStapel;
     }
     
+    public void geefHandKaarten() {
+        //de speler krijgt 4 handkaarten, dit staat gelijk aan het verwijderen van 6 kaarten uit de startstapel
+        //we doen dit nu at random
+        for(int i=0; i<6; i++) {
+            int index = (int) (Math.random()*wedstrijdStapel.size());
+            wedstrijdStapel.remove(index);
+        }
+    }
+   
     
     //deze moeten toch niet random? Of was dit gewoon als testmethode? Ik heb de tabel die staat in UC1 met de kaarten nu toegevoegd in Kaart.java
     public Kaart geefKaart() {

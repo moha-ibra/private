@@ -19,4 +19,20 @@ public class SpelerRepository {
        spelers.add(speler);
     }
     
+    public List<Speler> geefRepo() {
+        return spelers;
+    }
+    
+    public Speler getSpelerMetID(int id) {
+        return spelers.get(id);
+    }
+    
+    public Speler zoekSpeler(String naam, int geboortedatum) {
+        for(Speler sp : spelers) {
+            if(sp.getNaam().equals(naam) && sp.getGeboortejaar() == geboortedatum) { 
+                return sp;
+            }  
+        }
+        return null; //niet gevonden    
+    }
 }

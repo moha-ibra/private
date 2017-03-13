@@ -21,15 +21,21 @@ public class Spel {
         geregistreerdeSpelers = new ArrayList<>();
  
     }
-    
-    
+     
     public void registreerSpelerInSpel(Speler speler) {
         if(geregistreerdeSpelers.size() != WEDSTRIJD_AANTAL) {
             geregistreerdeSpelers.add(speler);
+            //geef de speler een aantal handkaarten. Zie ook UC4. Dit staat gelijk aan een aantal kaarten verwijderen uit de spelers wedstrijdstapel
+            //we geven de speler nu 4 handkaarten == 6 kaarten verwijderen uit de startstapel
+            speler.geefHandKaarten();    
         }
     }  
     
     public List<Speler> geefGeregistreerdeSpelers() {
        return geregistreerdeSpelers;
+    }
+    
+    public int geefWedstrijdAantal() {
+        return WEDSTRIJD_AANTAL;
     }
 }
