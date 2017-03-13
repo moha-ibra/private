@@ -46,7 +46,8 @@ public class Kaart {
     
     @Override
     public String toString() {
-        return "\nType:" + Integer.toString(type) + "\nWaarde:" + Integer.toString(waarde) + "\nOmschrijving" + omschrijving;
+        //return "\nType:" + Integer.toString(type) + "\nWaarde:" + Integer.toString(waarde) + "\nOmschrijving" + omschrijving;
+        return "\n" + omschrijving + " kaart";
     }
     
     public static void initialiseerStandaardStartStapel() {
@@ -55,8 +56,8 @@ public class Kaart {
         standaardStartStapel.add(new Kaart(1,4, "+4"));
         standaardStartStapel.add(new Kaart(1,5, "+5"));
         standaardStartStapel.add(new Kaart(1,6, "+6"));
-        standaardStartStapel.add(new Kaart(0,1, "+/-1"));
-        standaardStartStapel.add(new Kaart(0,3, "+/- 3"));
+        standaardStartStapel.add(new Kaart(0,1, "+-1"));
+        standaardStartStapel.add(new Kaart(0,3, "+- 3"));
         standaardStartStapel.add(new Kaart(-1,1, "-1"));
         standaardStartStapel.add(new Kaart(-1,2, "-2"));
         standaardStartStapel.add(new Kaart(-1,3, "-3"));

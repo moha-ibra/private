@@ -13,6 +13,7 @@ public class SpelerRepository {
     public SpelerRepository() {
         //mapper = new SpelerMapper();
         spelers = new ArrayList<>();
+        //bij het aanmaken van de repo moeten de spelers die in de database zitten nog automatisch worden ingeladen.
     }
     
     public void voegToe(Speler speler) {
