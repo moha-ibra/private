@@ -27,7 +27,7 @@ public class Spel {
             geregistreerdeSpelers.add(speler);
             //geef de speler een aantal handkaarten. Zie ook UC4. Dit staat gelijk aan een aantal kaarten verwijderen uit de spelers wedstrijdstapel
             //we geven de speler nu 4 handkaarten == 6 kaarten verwijderen uit de startstapel
-            speler.geefHandKaarten();    
+            
         }
     }  
     

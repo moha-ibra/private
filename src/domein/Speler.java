@@ -3,6 +3,7 @@ package domein;
 import exceptions.VerplichtVeldException;
 import exceptions.VerplichtGeenLeestekensException;
 import exceptions.VerplichtPositiefGetalException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Speler {
@@ -10,7 +11,7 @@ public class Speler {
     private String naam;
     private int geboortejaar;
     private double krediet;
-    private List<Kaart> wedstrijdStapel; //de 10 startkaarten die de Speler krijgt
+    private List<Kaart> wedstrijdStapel; //om te beginnen de 10 startkaarten die de Speler krijgt
   
 
     public Speler(String naam, int geboortejaar) {
@@ -57,10 +58,17 @@ public class Speler {
         return wedstrijdStapel;
     }
     
-    public void geefHandKaarten() {
-        //de speler krijgt 4 handkaarten, dit staat gelijk aan het verwijderen van 6 kaarten uit de startstapel
-        //we doen dit nu at random
-        for(int i=0; i<6; i++) {
+    public void geefHandKaarten(int[] zesKaarten) {
+        //de speler kiest 6 kaarten van de 10 die hij wil behouden. Hiervan worden er 4 at random gekozen. 
+        List<Kaart> wedstrijdStapel_temp = new ArrayList<>();
+        
+        for(int i=0; i<zesKaarten.length; i++) {
+            wedstrijdStapel_temp.add(wedstrijdStapel.get(zesKaarten[i])); //we maken een tijdelijke lijst van de 6 kaarten
+        }
+        wedstrijdStapel = new ArrayList<>(wedstrijdStapel_temp); //nieuwe wedstrijdstapel is gelijk aan de 6 kaarten
+        
+        //we verwijderen at random 2 kaarten om met 4 kaarten over te schieten.
+        for(int i=0; i<2; i++) {
             int index = (int) (Math.random()*wedstrijdStapel.size());
             wedstrijdStapel.remove(index);
         }

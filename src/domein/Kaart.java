@@ -47,7 +47,7 @@ public class Kaart {
     @Override
     public String toString() {
         //return "\nType:" + Integer.toString(type) + "\nWaarde:" + Integer.toString(waarde) + "\nOmschrijving" + omschrijving;
-        return "\n" + omschrijving + " kaart";
+        return omschrijving + " kaart\n";
     }
     
     public static void initialiseerStandaardStartStapel() {

@@ -17,7 +17,7 @@ public class StartUp {
             System.out.println("We gaan eerst een aantal gebruikers aanmaken:");
             
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            for(int i=0; i<3; i++) {
+            for(int i=0; i<2; i++) {
                 String naam; 
                 int geboortedatum;
                 try {
@@ -86,11 +86,29 @@ public class StartUp {
             
             String[][] deelnemers = dc.nieuwSpel(ids);
            
-            System.out.println("\n\n\nEr is een spel pazaak aangemaakt met volgende spelers:");
-            
+            System.out.println("\n\n\nEr is een spel pazaak aangemaakt.");
+        
             i=1;
             for (String[] deelnemer : deelnemers) {
-                System.out.println(Integer.toString(i) + ": " + deelnemer[0] + " " +  deelnemer[1] + " " + deelnemer[2] + "\nHandkaarten:" + deelnemer[3] + "\n\n");
+                System.out.println("Voor " + deelnemer[0] + " moet je kiezen uit de volgende kaarten.");
+                System.out.println("\nHandkaarten:\n" + deelnemer[3]);
+                br = new BufferedReader(new InputStreamReader(System.in));
+                int[] zesKaarten = new int[6];
+                for(int j=0; j<6; j++) {
+                    try{
+                        System.out.println("Typ in getal voor kaart" + (j+1) + " die je wenst te selecteren.");
+                        zesKaarten[j] = Integer.parseInt(br.readLine()) - 1;
+                    }catch(NumberFormatException nfe) {
+                    System.out.println("Error. Dit is geen getal");
+                     } catch (IOException ex) {
+                    Logger.getLogger(StartUp.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                String[] info = dc.selecteerKaartenSpeler(deelnemer[0], Integer.parseInt(deelnemer[1]), zesKaarten);
+                
+                System.out.println(info[0] + " heeft nu als 4 handkaarten voor de wedstrijd.");
+                System.out.println("\nHandkaarten:\n" + info[3]);
+                
                 i++;
             }
             

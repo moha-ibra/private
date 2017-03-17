@@ -23,8 +23,10 @@ public class DomeinController {
         String jaar = Integer.toString(speler.getGeboortejaar());
         String krediet = Double.toString(speler.getKrediet());
         String kaartenInfo = "";
+        int j=1;
         for(Kaart k : speler.geefKaarten()) {
-            kaartenInfo = kaartenInfo.concat(k.toString());
+            kaartenInfo = kaartenInfo.concat(Integer.toString(j) + ": " + k.toString());
+            j++;
         }
         
         //System.out.println(naam + ", geboren in " + jaar + ", heeft " + krediet + " krediet");
@@ -61,8 +63,18 @@ public class DomeinController {
             info[i] = geefInfoSpeler();
         } 
         
-        return info;
+        return info;  
+    }
+    
+    public String[] selecteerKaartenSpeler(String naam, int geboortedatum, int[] kaarten) {
+        Speler sp = spelerRepo.zoekSpeler(naam, geboortedatum);
+        sp.geefHandKaarten(kaarten);
         
+        String[] info;
+        this.speler = sp;
+        info = geefInfoSpeler();
+        
+        return info;
         
     }
     
