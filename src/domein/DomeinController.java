@@ -77,17 +77,5 @@ public class DomeinController {
         return info;
         
     }
-    
-    // Maak een array van <aantalKaarten> kaarten, en print type en waarde
-    //Deze originele implementatie mag weg volgens de feedback van Malfait, niet? DC is niet verantwoordelijke voor dit?
-   /* public Kaart[] geefKaarten() {
-        int aantalKaarten = 10;
-        Kaart[] kaarten = new Kaart[aantalKaarten];
-        for(int i = 0; i < aantalKaarten; i++) {
-            kaarten[i] = speler.geefKaart();
-            System.out.println("Type: " + kaarten[i].getType() + ", Waarde: " + kaarten[i].getWaarde());
-        }
-        return kaarten;
-    }*/
-    
+        
 }

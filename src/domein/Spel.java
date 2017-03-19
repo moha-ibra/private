@@ -18,7 +18,7 @@ public class Spel {
     private List<Speler> geregistreerdeSpelers;
     
     public Spel() {
-        geregistreerdeSpelers = new ArrayList<>();
+        this.geregistreerdeSpelers = new ArrayList<>();
  
     }
      

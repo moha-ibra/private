@@ -17,7 +17,7 @@ public class Speler {
     public Speler(String naam, int geboortejaar) {
         setNaam(naam);
         setGeboortejaar(geboortejaar);
-        wedstrijdStapel = Kaart.geefKopieVanStandaardStartStapel(); //niet zeker of dit nu hier moet gebeuren of niet. In UC1 staat beschreven van wel, maar dan in UC3 vermelden ze nog eens het initialiseren van de wedstrijdstapel.
+        this.wedstrijdStapel = Kaart.geefKopieVanStandaardStartStapel(); //niet zeker of dit nu hier moet gebeuren of niet. In UC1 staat beschreven van wel, maar dan in UC3 vermelden ze nog eens het initialiseren van de wedstrijdstapel.
     }
 
     public String getNaam() {
@@ -72,14 +72,5 @@ public class Speler {
             int index = (int) (Math.random()*wedstrijdStapel.size());
             wedstrijdStapel.remove(index);
         }
-    }
-   
-    
-    //deze moeten toch niet random? Of was dit gewoon als testmethode? Ik heb de tabel die staat in UC1 met de kaarten nu toegevoegd in Kaart.java
-    public Kaart geefKaart() {
-        int type = (int)(Math.random()*4+1);
-        int waarde = (int)(Math.random()*13+1);
-        Kaart kaart = new Kaart(type, waarde);
-        return kaart;
     }
 }

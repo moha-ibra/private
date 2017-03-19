@@ -11,9 +11,10 @@ public class Kaart {
     private static List<Kaart> standaardStartStapel; //de standaard stapel moet niet telkens opnieuw gemaakt worden want is voor elk object hetzelfde. Vandaar static
 
     public Kaart(int type, int waarde) {
-        this.type = type;
-        this.waarde = waarde;
+        setType(type);
+        setWaarde(waarde);
     }
+    
     public Kaart(int type, int waarde, String omschrijving) {
         this.type = type;
         this.waarde = waarde;
