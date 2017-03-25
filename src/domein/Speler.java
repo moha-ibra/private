@@ -3,6 +3,7 @@ package domein;
 import exceptions.VerplichtVeldException;
 import exceptions.VerplichtGeenLeestekensException;
 import exceptions.VerplichtPositiefGetalException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,8 +47,8 @@ public class Speler {
         this.geboortejaar = geboortejaar;
     }
 
-    public double getKrediet() {
-        return krediet;
+    public BigDecimal getKrediet() {
+        return new BigDecimal("krediet");
     }
 
     public void setKrediet(double krediet) {
