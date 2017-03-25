@@ -1,5 +1,7 @@
 package domein;
 
+import java.math.BigDecimal;
+
 public class DomeinController {
     
     private Speler speler;
@@ -21,7 +23,7 @@ public class DomeinController {
     public String[] geefInfoSpeler() {
         String naam = speler.getNaam();
         String jaar = Integer.toString(speler.getGeboortejaar());
-        String krediet = Double.toString(speler.getKrediet());
+        String krediet = speler.getKrediet().toString();
         String kaartenInfo = "";
         int j=1;
         for(Kaart k : speler.geefKaarten()) {
