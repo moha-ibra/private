@@ -11,7 +11,7 @@ public class Speler {
     
     private String naam;
     private int geboortejaar;
-    private double krediet;
+    private static double krediet;
     private List<Kaart> wedstrijdStapel; //om te beginnen de 10 startkaarten die de Speler krijgt
   
 
@@ -47,10 +47,12 @@ public class Speler {
         this.geboortejaar = geboortejaar;
     }
 
-    public BigDecimal getKrediet() {
-        return new BigDecimal("krediet");
+    public  BigDecimal getKrediet() {
+       BigDecimal bg =  new BigDecimal(krediet);
+       return bg;
     }
-
+    
+   
     public void setKrediet(double krediet) {
         this.krediet = krediet;
     }
