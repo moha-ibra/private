@@ -51,7 +51,8 @@ public class Speler {
     public BigDecimal getKrediet() {
         return krediet;
     }
-
+    
+   
     public void setKrediet(double krediet) {
         this.krediet.add(new BigDecimal(krediet));
     }
