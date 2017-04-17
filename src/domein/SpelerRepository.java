@@ -20,20 +20,17 @@ public class SpelerRepository {
        spelers.add(speler);
     }
     
-    public List<Speler> geefRepo() {
+    public List<Speler> geefLijstSpelers() {
         return spelers;
     }
     
-    public Speler getSpelerMetID(int id) {
-        return spelers.get(id);
-    }
-    
-    public Speler zoekSpeler(String naam, int geboortedatum) {
+    public Speler geefSpelerMetNaam(String naam) {
         for(Speler sp : spelers) {
-            if(sp.getNaam().equals(naam) && sp.getGeboortejaar() == geboortedatum) { 
+            if(sp.getNaam().equals(naam)) { 
                 return sp;
             }  
         }
+        System.out.println("ERROR. Geen speler gevonden op naam: " + naam);
         return null; //niet gevonden    
     }
 }

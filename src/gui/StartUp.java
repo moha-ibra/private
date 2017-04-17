@@ -4,6 +4,8 @@ import domein.DomeinController;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -28,7 +30,7 @@ public class StartUp extends Application {
     public static void main(String... args){
         
         // In main enkel deze lijn toegevoegd
-        Application.launch(StartUp.class, args);
+       // Application.launch(StartUp.class, args);
 
         System.out.println("Welkom");
         DomeinController dc = new DomeinController();
@@ -45,15 +47,17 @@ public class StartUp extends Application {
                 geboortedatum = Integer.parseInt(br.readLine());
                 dc.maakSpeler(naam, geboortedatum);
 
-                String[] info = dc.geefInfoSpeler();
+                List<String> info = dc.geefInfoSpeler();
                 System.out.println("Speler succesvol aangemaakt.");
-                for (String info1 : info) {
+               
+                info.forEach((info1) -> {
                     System.out.println(info1);
-                }
+                });
 
             }
             catch(NumberFormatException nfe) {
                 System.out.println("Error. Dit is geen getal");
+                nfe.printStackTrace();
             } catch (IOException ex) {
                 Logger.getLogger(StartUp.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -80,55 +84,88 @@ public class StartUp extends Application {
         System.out.println("\n\n\nWe starten een spel pazaak.");
         System.out.println("Hier zijn alle beschikbare spelers:");
 
-        String[][] alleSpelers = dc.geefSpelerRepo();
-        int i=1;
-        for (String[] alleSpeler : alleSpelers) {
-            System.out.println(Integer.toString(i) + ": " + alleSpeler[0] + " " +  alleSpeler[1] + " " +alleSpeler[2]);
-            i++;
-        }
+        List<String> alleSpelers = dc.geefLijstSpelers();
+        alleSpelers.forEach((item) -> { 
+            System.out.println(item);
+        });
 
-
-        int[] ids = new int[2];
+        int aantal = dc.geefMaximumAantalSpelers();
+        ArrayList<String> geselecteerdeSpelers = new ArrayList<>();
+        System.out.println("We spelen het spel met " + aantal + " spelers.");
+        
         br = new BufferedReader(new InputStreamReader(System.in));
-        for(i=0; i<2; i++) {
-            System.out.println("Typ in getal voor gebruiker" + (i+1) + ":");
+        for(int i=0; i<aantal; i++) {
+            System.out.println("Typ in naam voor gebruiker" + (i+1) + ":");
             try {
-                ids[i] = Integer.parseInt(br.readLine()) - 1;
-            }
-            catch(NumberFormatException nfe) {
-                System.out.println("Error. Dit is geen getal");
+                String naam = br.readLine();
+                dc.selecteerSpeler(naam);
+                geselecteerdeSpelers.add(naam);
             } catch (IOException ex) {
                 Logger.getLogger(StartUp.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
-        String[][] deelnemers = dc.nieuwSpel(ids);
-
-        System.out.println("\n\n\nEr is een spel pazaak aangemaakt.");
-
-        i=1;
-        for (String[] deelnemer : deelnemers) {
-            System.out.println("Voor " + deelnemer[0] + " moet je kiezen uit de volgende kaarten.");
-            System.out.println("\nHandkaarten:\n" + deelnemer[3]);
-            br = new BufferedReader(new InputStreamReader(System.in));
-            int[] zesKaarten = new int[6];
-            for(int j=0; j<6; j++) {
-                try{
-                    System.out.println("Typ in getal voor kaart" + (j+1) + " die je wenst te selecteren.");
-                    zesKaarten[j] = Integer.parseInt(br.readLine()) - 1;
-                }catch(NumberFormatException nfe) {
-                System.out.println("Error. Dit is geen getal");
-                 } catch (IOException ex) {
-                Logger.getLogger(StartUp.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            String[] info = dc.selecteerKaartenSpeler(deelnemer[0], Integer.parseInt(deelnemer[1]), zesKaarten);
-
-            System.out.println(info[0] + " heeft nu als 4 handkaarten voor de wedstrijd.");
-            System.out.println("\nHandkaarten:\n" + info[3]);
-
-            i++;
+        
+        System.out.println("Geselecteerde spelers:");
+        geselecteerdeSpelers.forEach((item) -> {
+            System.out.println(item);
+        
+        });
+        System.out.println("Bevestig wedstrijd? (JA/NEE)");
+        try {
+            String keuze = br.readLine();
+            if(keuze.equals("NEE")) return;
+        } catch (IOException ex) {
+            Logger.getLogger(StartUp.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.out.println("Er is een spel pazaak aangemaakt.");
+        dc.nieuweWedstrijd();
+        
+        int aantalSpelers;
+        do {
+            System.out.println("Dit zijn de spelers zonder wedstrijdstapel:");
+            List<String> namenSpelersZonderWedstrijdStapel = dc.geefSpelersZonderWedstrijdStapel();
+            aantalSpelers = namenSpelersZonderWedstrijdStapel.size() - 1;
+            namenSpelersZonderWedstrijdStapel.forEach((item) -> {
+                System.out.println(item);
+            });
+            br = new BufferedReader(new InputStreamReader(System.in));
+            System.out.println("Selecteer gebruiker om wedstrijdstapel te geven:");
+            try {
+                dc.selecteerActieveSpelerVoorWedstrijdStapel(br.readLine());
+            } catch (IOException ex) {
+                Logger.getLogger(StartUp.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        } while(aantalSpelers != 0);
+        
+        
+        
+        
+        
+
+//        i=1;
+//        for (String[] deelnemer : deelnemers) {
+//            System.out.println("Voor " + deelnemer[0] + " moet je kiezen uit de volgende kaarten.");
+//            System.out.println("\nHandkaarten:\n" + deelnemer[3]);
+//            br = new BufferedReader(new InputStreamReader(System.in));
+//            int[] zesKaarten = new int[6];
+//            for(int j=0; j<6; j++) {
+//                try{
+//                    System.out.println("Typ in getal voor kaart" + (j+1) + " die je wenst te selecteren.");
+//                    zesKaarten[j] = Integer.parseInt(br.readLine()) - 1;
+//                }catch(NumberFormatException nfe) {
+//                System.out.println("Error. Dit is geen getal");
+//                 } catch (IOException ex) {
+//                Logger.getLogger(StartUp.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
+//            String[] info = dc.selecteerKaartenSpeler(deelnemer[0], Integer.parseInt(deelnemer[1]), zesKaarten);
+//
+//            System.out.println(info[0] + " heeft nu als 4 handkaarten voor de wedstrijd.");
+//            System.out.println("\nHandkaarten:\n" + info[3]);
+//
+//            i++;
+//        }
             
             
     }

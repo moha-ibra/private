@@ -52,6 +52,9 @@ public class Kaart {
     }
     
     public static void initialiseerStandaardStartStapel() {
+        //de standaard wedstrijdstapel
+        //we houden hier een statische kopie van bij 
+        
         standaardStartStapel = new ArrayList<>();
         standaardStartStapel.add(new Kaart(1,2, "+2"));
         standaardStartStapel.add(new Kaart(1,4, "+4"));

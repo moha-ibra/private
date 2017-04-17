@@ -11,14 +11,15 @@ public class Speler {
     
     private String naam;
     private int geboortejaar;
-    private double krediet;
-    private List<Kaart> wedstrijdStapel; //om te beginnen de 10 startkaarten die de Speler krijgt
+    private BigDecimal krediet;
+    private List<Kaart> wedstrijdStapel =  null; //standaard geen wedstrijdstapel
   
 
     public Speler(String naam, int geboortejaar) {
         setNaam(naam);
         setGeboortejaar(geboortejaar);
-        this.wedstrijdStapel = Kaart.geefKopieVanStandaardStartStapel(); //niet zeker of dit nu hier moet gebeuren of niet. In UC1 staat beschreven van wel, maar dan in UC3 vermelden ze nog eens het initialiseren van de wedstrijdstapel.
+        krediet = new BigDecimal(0);
+        
     }
 
     public String getNaam() {
@@ -48,15 +49,19 @@ public class Speler {
     }
 
     public BigDecimal getKrediet() {
-        return new BigDecimal("krediet");
+        return krediet;
     }
 
     public void setKrediet(double krediet) {
-        this.krediet = krediet;
+        this.krediet.add(new BigDecimal(krediet));
     }
     
-    public List<Kaart> geefKaarten() {
+    public List<Kaart> geefWedstrijdStapel() {
         return wedstrijdStapel;
+    }
+    
+    public void maakWedstrijdStapel() {
+        this.wedstrijdStapel = Kaart.geefKopieVanStandaardStartStapel();
     }
     
     public void geefHandKaarten(int[] zesKaarten) {
