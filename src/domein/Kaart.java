@@ -9,7 +9,7 @@ public class Kaart {
     private int waarde; //altijd positief getal
     private String omschrijving; 
     private static List<Kaart> standaardStartStapel; //de standaard stapel moet niet telkens opnieuw gemaakt worden want is voor elk object hetzelfde. Vandaar static
-
+    private static int AANTAL_SELECTIE_KAARTEN = 6;
     public Kaart(int type, int waarde) {
         setType(type);
         setWaarde(waarde);
@@ -48,7 +48,7 @@ public class Kaart {
     @Override
     public String toString() {
         //return "\nType:" + Integer.toString(type) + "\nWaarde:" + Integer.toString(waarde) + "\nOmschrijving" + omschrijving;
-        return omschrijving + " kaart\n";
+        return omschrijving + " kaart";
     }
     
     public static void initialiseerStandaardStartStapel() {
@@ -61,7 +61,7 @@ public class Kaart {
         standaardStartStapel.add(new Kaart(1,5, "+5"));
         standaardStartStapel.add(new Kaart(1,6, "+6"));
         standaardStartStapel.add(new Kaart(0,1, "+-1"));
-        standaardStartStapel.add(new Kaart(0,3, "+- 3"));
+        standaardStartStapel.add(new Kaart(0,3, "+-3"));
         standaardStartStapel.add(new Kaart(-1,1, "-1"));
         standaardStartStapel.add(new Kaart(-1,2, "-2"));
         standaardStartStapel.add(new Kaart(-1,3, "-3"));
@@ -71,5 +71,9 @@ public class Kaart {
     
     public static List<Kaart> geefKopieVanStandaardStartStapel() {
         return new ArrayList<>(standaardStartStapel);
+    }
+    
+    public static int geefAantalSelectieKaarten() {
+        return AANTAL_SELECTIE_KAARTEN;
     }
 }

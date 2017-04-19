@@ -12,7 +12,7 @@ public class Speler {
     private String naam;
     private int geboortejaar;
     private BigDecimal krediet;
-    private List<Kaart> wedstrijdStapel =  null; //standaard geen wedstrijdstapel
+    private List<Kaart> wedstrijdStapel =  new ArrayList<>();
   
 
     public Speler(String naam, int geboortejaar) {
@@ -61,23 +61,30 @@ public class Speler {
         return wedstrijdStapel;
     }
     
-    public void maakWedstrijdStapel() {
-        this.wedstrijdStapel = Kaart.geefKopieVanStandaardStartStapel();
+    public List<Kaart> geefNietGeselecteerdeKaarten() {
+        return Kaart.geefKopieVanStandaardStartStapel();
     }
     
-    public void geefHandKaarten(int[] zesKaarten) {
-        //de speler kiest 6 kaarten van de 10 die hij wil behouden. Hiervan worden er 4 at random gekozen. 
-        List<Kaart> wedstrijdStapel_temp = new ArrayList<>();
+    public void voegKaartToeAanWedstrijdStapel(Kaart k) {
+        this.wedstrijdStapel.add(k);
+    }
+    
+    public void maakWedstrijdStapel() {
+        //er worden er 4 at random geselecteerd uit de geselecteerde kaarten (6). Dit is hetzelfde als er 2 verwijderen.
         
-        for(int i=0; i<zesKaarten.length; i++) {
-            wedstrijdStapel_temp.add(wedstrijdStapel.get(zesKaarten[i])); //we maken een tijdelijke lijst van de 6 kaarten
+        int aantalTeVerwijderen = wedstrijdStapel.size()-4;
+       
+        for(int i=0; i<aantalTeVerwijderen; i++) {
+            int rand = (int) (Math.random()*wedstrijdStapel.size());
+            this.wedstrijdStapel.remove(rand);
         }
-        wedstrijdStapel = new ArrayList<>(wedstrijdStapel_temp); //nieuwe wedstrijdstapel is gelijk aan de 6 kaarten
         
-        //we verwijderen at random 2 kaarten om met 4 kaarten over te schieten.
-        for(int i=0; i<2; i++) {
-            int index = (int) (Math.random()*wedstrijdStapel.size());
-            wedstrijdStapel.remove(index);
-        }
+        
+        //deze output is enkel voor debuggen. is niet nodig volgens use case om de uiteindelijke wedstrijdstapel te printen
+        System.out.println("De wedstrijdstapel voor " + this.getNaam());
+        wedstrijdStapel.forEach((kaart)->{
+            System.out.println(kaart.toString());
+        });
+        
     }
 }

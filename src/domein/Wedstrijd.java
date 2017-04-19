@@ -33,7 +33,7 @@ public class Wedstrijd {
         List<Speler> spelersZonderWedstrijdStapel = new ArrayList<>();
        
         geselecteerdeSpelers.forEach((item) -> {
-            if(item.geefWedstrijdStapel() == null) spelersZonderWedstrijdStapel.add(item);
+            if(item.geefWedstrijdStapel().isEmpty()) spelersZonderWedstrijdStapel.add(item);
         });
         
         return spelersZonderWedstrijdStapel;

@@ -131,12 +131,34 @@ public class StartUp extends Application {
             br = new BufferedReader(new InputStreamReader(System.in));
             System.out.println("Selecteer gebruiker om wedstrijdstapel te geven:");
             try {
-                dc.selecteerActieveSpelerVoorWedstrijdStapel(br.readLine());
+                String speler = br.readLine();
+                dc.selecteerActieveSpelerVoorWedstrijdStapel(speler);
+                
+                int aantalSelectieKaarten = dc.geefAantalSelectieKaarten();
+                System.out.println("Dit is de standaard startstapel. Selecteer hier " + aantalSelectieKaarten + " kaarten uit voor " + speler);
+                
+                List<String> omschrijvingenKaarten = dc.kaartenToevoegenActieveSpeler();
+                omschrijvingenKaarten.forEach((item) -> {
+                    System.out.println(item);
+                });
+                
+                for(int i=0; i<aantalSelectieKaarten; i++) {
+                    int index = -1;
+                    while(index == -1) {
+                        System.out.println("Selecteer kaart" + (i+1) + " voor " + speler);
+                        index = omschrijvingenKaarten.indexOf(br.readLine());
+                        if(index == -1) System.out.println("Geen geldige selectie.");
+                    }
+                    dc.selecteerKaartVoorActieveSpeler(index);
+                }
+                dc.maakWedstrijdStapelVoorActieveSpeler();
             } catch (IOException ex) {
                 Logger.getLogger(StartUp.class.getName()).log(Level.SEVERE, null, ex);
             }
             
         } while(aantalSpelers != 0);
+        
+        
         
         
         

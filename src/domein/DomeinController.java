@@ -83,12 +83,29 @@ public class DomeinController {
         
     }
     public void selecteerActieveSpelerVoorWedstrijdStapel(String naam) {
-        this.speler = this.spelerRepository.geefSpelerMetNaam(naam);
-       
-        if(this.speler != null)
-            this.speler.maakWedstrijdStapel();
+        this.speler = this.spelerRepository.geefSpelerMetNaam(naam); 
+    }
+    public List<String> kaartenToevoegenActieveSpeler() {
+        List<String> startStapel = new ArrayList<>();
+        this.speler.geefNietGeselecteerdeKaarten().forEach((kaart) -> {
+            startStapel.add(kaart.toString());
+        });
+        return startStapel;
     }
     
+    public int geefAantalSelectieKaarten() {
+        return Kaart.geefAantalSelectieKaarten();
+    }
+    
+    public void selecteerKaartVoorActieveSpeler(int index) {
+        Kaart k = this.speler.geefNietGeselecteerdeKaarten().get(index);
+        this.speler.voegKaartToeAanWedstrijdStapel(k);
+    }
+    
+    public void maakWedstrijdStapelVoorActieveSpeler() {
+        this.speler.maakWedstrijdStapel();
+        
+    }
 //    public String[] selecteerKaartenSpeler(String naam, int geboortedatum, int[] kaarten) {
 //        Speler sp = spelerRepo.zoekSpeler(naam, geboortedatum);
 //        sp.geefHandKaarten(kaarten);
