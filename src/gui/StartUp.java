@@ -53,7 +53,10 @@ public class StartUp extends Application {
                 info.forEach((info1) -> {
                     System.out.println(info1);
                 });
-
+                List<String> kaarten = dc.geefKaarten();
+                kaarten.forEach((kaartOmschrijving)->{
+                    System.out.println(kaartOmschrijving);
+                });
             }
             catch(NumberFormatException nfe) {
                 System.out.println("Error. Dit is geen getal");

@@ -41,6 +41,15 @@ public class DomeinController {
         return info;
     }
     
+    public List<String> geefKaarten() {
+        List<String> startStapel = new ArrayList<>();
+        this.speler.geefStartStapel().forEach((kaart) -> {
+            startStapel.add(kaart.toString());
+        });
+        
+        return startStapel;
+    }
+    
     public List<String> geefLijstSpelers() {
         List<Speler> alleSpelers = spelerRepository.geefLijstSpelers();
         ArrayList<String> info = new ArrayList<>();

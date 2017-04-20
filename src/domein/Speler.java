@@ -12,13 +12,16 @@ public class Speler {
     private String naam;
     private int geboortejaar;
     private BigDecimal krediet;
+    private List<Kaart> startStapel = new ArrayList<>();
     private List<Kaart> wedstrijdStapel =  new ArrayList<>();
+    
   
 
     public Speler(String naam, int geboortejaar) {
         setNaam(naam);
         setGeboortejaar(geboortejaar);
         krediet = new BigDecimal(0);
+        startStapel.addAll(Kaart.geefKopieVanStandaardStartStapel());
         
     }
 
@@ -55,6 +58,10 @@ public class Speler {
    
     public void setKrediet(double krediet) {
         this.krediet.add(new BigDecimal(krediet));
+    }
+    
+    public List<Kaart> geefStartStapel() {
+        return this.startStapel;
     }
     
     public List<Kaart> geefWedstrijdStapel() {
