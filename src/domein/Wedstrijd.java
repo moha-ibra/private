@@ -21,6 +21,13 @@ public class Wedstrijd {
         this.geselecteerdeSpelers = new ArrayList<>();
     }
     
+    public Speler geefSpelerMetNaam(String naam) {
+        for(Speler sp : geselecteerdeSpelers) {
+            if(sp.getNaam().equals(naam)) return sp;
+        }
+        return null;   
+    }
+    
     public void registreerWedstrijd(List<Speler> spelers) {
         geselecteerdeSpelers.addAll(spelers);
     }

@@ -1,6 +1,7 @@
 package domein;
 
 //import persistentie.SpelerMapper;
+import exceptions.SpelerNietGevondenException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +31,6 @@ public class SpelerRepository {
                 return sp;
             }  
         }
-        System.out.println("ERROR. Geen speler gevonden op naam: " + naam);
-        return null; //niet gevonden    
+        throw new SpelerNietGevondenException("ERROR. Speler niet gevonden."); 
     }
 }

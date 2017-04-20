@@ -5,6 +5,7 @@ import exceptions.VerplichtGeenLeestekensException;
 import exceptions.VerplichtPositiefGetalException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Speler {
@@ -67,11 +68,7 @@ public class Speler {
     public List<Kaart> geefWedstrijdStapel() {
         return wedstrijdStapel;
     }
-    
-    public List<Kaart> geefNietGeselecteerdeKaarten() {
-        return Kaart.geefKopieVanStandaardStartStapel();
-    }
-    
+     
     public void voegKaartToeAanWedstrijdStapel(Kaart k) {
         this.wedstrijdStapel.add(k);
     }
@@ -79,12 +76,8 @@ public class Speler {
     public void maakWedstrijdStapel() {
         //er worden er 4 at random geselecteerd uit de geselecteerde kaarten (6). Dit is hetzelfde als er 2 verwijderen.
         
-        int aantalTeVerwijderen = wedstrijdStapel.size()-4;
-       
-        for(int i=0; i<aantalTeVerwijderen; i++) {
-            int rand = (int) (Math.random()*wedstrijdStapel.size());
-            this.wedstrijdStapel.remove(rand);
-        }
+        Collections.shuffle(wedstrijdStapel);
+        wedstrijdStapel.subList(4, wedstrijdStapel.size()).clear();
         
         
         //deze output is enkel voor debuggen. is niet nodig volgens use case om de uiteindelijke wedstrijdstapel te printen

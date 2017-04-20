@@ -26,13 +26,13 @@ public class DomeinController {
     
     //maakt een lijst van de info van de actieve speler
     public List<String> geefInfoSpeler() {
-        ArrayList<String> info = new ArrayList<String>();
+        ArrayList<String> info = new ArrayList<>();
         String naam = speler.getNaam();
-        String jaar = Integer.toString(speler.getGeboortejaar());
+        //String jaar = Integer.toString(speler.getGeboortejaar());
         String krediet = speler.getKrediet().toPlainString();
      
         info.add(naam);
-        info.add(jaar);
+       //info.add(jaar);
         info.add(krediet);
         
         
@@ -56,11 +56,10 @@ public class DomeinController {
         
         alleSpelers.forEach((item) -> {
             info.add(item.getNaam());
-            info.add(Integer.toString(item.getGeboortejaar()));
+            //info.add(Integer.toString(item.getGeboortejaar()));
         });
         
         return info;
-      
     }
     
     public int geefMaximumAantalSpelers() {
@@ -72,8 +71,7 @@ public class DomeinController {
       
         if(speler != null)
             spelSpelers.add(speler);
-        else
-            System.out.println("ERROR. De naam van de speler werd niet gevonden in de speler repository.");
+        
     }
     
     public void nieuweWedstrijd() {
@@ -92,11 +90,11 @@ public class DomeinController {
         
     }
     public void selecteerActieveSpelerVoorWedstrijdStapel(String naam) {
-        this.speler = this.spelerRepository.geefSpelerMetNaam(naam); 
+        this.speler = this.wedstrijd.geefSpelerMetNaam(naam); 
     }
     public List<String> kaartenToevoegenActieveSpeler() {
         List<String> startStapel = new ArrayList<>();
-        this.speler.geefNietGeselecteerdeKaarten().forEach((kaart) -> {
+        this.speler.geefStartStapel().forEach((kaart) -> {
             startStapel.add(kaart.toString());
         });
         return startStapel;
@@ -107,7 +105,7 @@ public class DomeinController {
     }
     
     public void selecteerKaartVoorActieveSpeler(int index) {
-        Kaart k = this.speler.geefNietGeselecteerdeKaarten().get(index);
+        Kaart k = this.speler.geefStartStapel().get(index);
         this.speler.voegKaartToeAanWedstrijdStapel(k);
     }
     
@@ -115,16 +113,5 @@ public class DomeinController {
         this.speler.maakWedstrijdStapel();
         
     }
-//    public String[] selecteerKaartenSpeler(String naam, int geboortedatum, int[] kaarten) {
-//        Speler sp = spelerRepo.zoekSpeler(naam, geboortedatum);
-//        sp.geefHandKaarten(kaarten);
-//        
-//        String[] info;
-//        this.speler = sp;
-//        info = geefInfoSpeler();
-//        
-//        return info;
-//        
-//    }
-        
+
 }

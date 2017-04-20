@@ -52,8 +52,8 @@ public class Kaart {
     }
     
     public static void initialiseerStandaardStartStapel() {
-        //de standaard wedstrijdstapel
-        //we houden hier een statische kopie van bij 
+        //de standaard startstapel
+        //we houden hier een statische kopie van bij want voor elk object is deze hetzelfde
         
         standaardStartStapel = new ArrayList<>();
         standaardStartStapel.add(new Kaart(1,2, "+2"));
@@ -65,7 +65,7 @@ public class Kaart {
         standaardStartStapel.add(new Kaart(-1,1, "-1"));
         standaardStartStapel.add(new Kaart(-1,2, "-2"));
         standaardStartStapel.add(new Kaart(-1,3, "-3"));
-        standaardStartStapel.add( new Kaart(-1,5, "-5"));
+        standaardStartStapel.add(new Kaart(-1,5, "-5"));
         
     }
     
