@@ -15,31 +15,39 @@ import java.util.List;
 public class Wedstrijd {
     private static final int WEDSTRIJD_AANTAL = 2;
 
-    private List<Speler> geselecteerdeSpelers;
+    private List<Speler> spelSpelers;
+    private int[] gewonnenSets;
+    private Speler winnaar;
     
     public Wedstrijd() {
-        this.geselecteerdeSpelers = new ArrayList<>();
+        this.spelSpelers = new ArrayList<>();
+        this.gewonnenSets = new int[WEDSTRIJD_AANTAL];
     }
     
     public Speler geefSpelerMetNaam(String naam) {
-        for(Speler sp : geselecteerdeSpelers) {
+        for(Speler sp : spelSpelers) {
             if(sp.getNaam().equals(naam)) return sp;
         }
         return null;   
     }
     
     public void registreerWedstrijd(List<Speler> spelers) {
-        geselecteerdeSpelers.addAll(spelers);
+        spelSpelers.addAll(spelers);
     }
      
     public int geefMaximumAantalSpelers() {
         return WEDSTRIJD_AANTAL;
     }
     
+    private void verhoogGewonnenSetsSpeler(Speler speler) {
+        int index = spelSpelers.indexOf(speler);
+        gewonnenSets[index]++;
+    }
+    
     public List<Speler> geefSpelersZonderWedstrijdStapel() {
         List<Speler> spelersZonderWedstrijdStapel = new ArrayList<>();
        
-        geselecteerdeSpelers.forEach((item) -> {
+        spelSpelers.forEach((item) -> {
             if(item.geefWedstrijdStapel().isEmpty()) spelersZonderWedstrijdStapel.add(item);
         });
         

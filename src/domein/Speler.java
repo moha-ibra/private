@@ -57,7 +57,7 @@ public class Speler {
     }
     
    
-    public void setKrediet(double krediet) {
+    public void voegKredietToe(double krediet) {
         this.krediet.add(new BigDecimal(krediet));
     }
     
@@ -81,10 +81,10 @@ public class Speler {
         
         
         //deze output is enkel voor debuggen. is niet nodig volgens use case om de uiteindelijke wedstrijdstapel te printen
-        System.out.println("De wedstrijdstapel voor " + this.getNaam());
-        wedstrijdStapel.forEach((kaart)->{
-            System.out.println(kaart.toString());
-        });
+//        System.out.println("De wedstrijdstapel voor " + this.getNaam());
+//        wedstrijdStapel.forEach((kaart)->{
+//            System.out.println(kaart.toString());
+//        });
         
     }
 }

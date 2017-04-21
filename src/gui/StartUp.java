@@ -37,7 +37,7 @@ public class StartUp extends Application {
         System.out.println("We gaan eerst een aantal gebruikers aanmaken:");
         
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); 
-        for(int i=0; i<2; i++) {
+        for(int i=0; i<3; i++) {
             String naam; 
             int geboortedatum;
             try {

@@ -10,9 +10,26 @@ public class Kaart {
     private String omschrijving; 
     private static List<Kaart> standaardStartStapel; //de standaard stapel moet niet telkens opnieuw gemaakt worden want is voor elk object hetzelfde. Vandaar static
     private static int AANTAL_SELECTIE_KAARTEN = 6;
+   
     public Kaart(int type, int waarde) {
-        setType(type);
-        setWaarde(waarde);
+        
+        this.type = type;
+        this.waarde = waarde;
+        String t;
+       
+        switch (type) {
+            case 1:
+                t = "+";
+                break;
+            case 0:
+                t = "+-";
+                break;
+            default:
+                t = "-";
+                break;
+        }
+        this.omschrijving = t.concat(Integer.toString(waarde));
+        
     }
     
     public Kaart(int type, int waarde, String omschrijving) {
