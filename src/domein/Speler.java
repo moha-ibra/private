@@ -19,7 +19,7 @@ public class Speler {
     public Speler(String naam, int geboortejaar) {
         setNaam(naam);
         setGeboortejaar(geboortejaar);
-        krediet = new BigDecimal(0);
+        krediet = BigDecimal.ZERO;
         startStapel.addAll(Kaart.geefKopieVanStandaardStartStapel());
         
     }
@@ -55,8 +55,9 @@ public class Speler {
     }
     
    
-    public void voegKredietToe(double krediet) {
-        this.krediet.add(new BigDecimal(krediet));
+    public void voegKredietToe(double delta) {
+        this.krediet = this.krediet.add(new BigDecimal(delta));
+        
     }
     
     public List<Kaart> geefStartStapel() {
