@@ -106,12 +106,25 @@ public class DomeinController {
     
     public void selecteerKaartVoorActieveSpeler(int index) {
         Kaart k = this.speler.geefStartStapel().get(index);
+        this.speler.geefStartStapel().remove(index);
         this.speler.voegKaartToeAanWedstrijdStapel(k);
     }
     
     public void maakWedstrijdStapelVoorActieveSpeler() {
         this.speler.maakWedstrijdStapel();
         
+    }
+    
+    public List<String> geefWinnaar() {
+        if(this.wedstrijd.isWedstrijdGedaan() == -1) return null;
+        
+        List<String> winnaarInfo = new ArrayList<>();
+        Speler winnaar = this.wedstrijd.geefWinnaar();
+        winnaar.voegKredietToe(5);
+        winnaarInfo.add(winnaar.getNaam());
+        winnaarInfo.add(winnaar.getKrediet().toPlainString());
+        
+        return winnaarInfo;
     }
 
 }

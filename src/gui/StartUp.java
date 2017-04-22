@@ -37,7 +37,7 @@ public class StartUp extends Application {
         System.out.println("We gaan eerst een aantal gebruikers aanmaken:");
         
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); 
-        for(int i=0; i<3; i++) {
+        for(int i=0; i<2; i++) {
             String naam; 
             int geboortedatum;
             try {
@@ -121,27 +121,50 @@ public class StartUp extends Application {
                 dc.selecteerActieveSpelerVoorWedstrijdStapel(speler);
                 
                 int aantalSelectieKaarten = dc.geefAantalSelectieKaarten();
-                System.out.println("Dit is de startstapel. Selecteer hier " + aantalSelectieKaarten + " kaarten uit voor " + speler);
+                System.out.println("Selecteer " + aantalSelectieKaarten + " kaarten uit voor " + speler);
                 
-                List<String> omschrijvingenKaarten = dc.kaartenToevoegenActieveSpeler();
-                omschrijvingenKaarten.forEach((item) -> {
-                    System.out.println(item);
-                });
+                List<String> omschrijvingenKaarten;
                 
                 for(int i=0; i<aantalSelectieKaarten; i++) {
                     int index = -1;
+                    System.out.println("Nog beschikbare kaarten voor " + speler);
+                    omschrijvingenKaarten = dc.kaartenToevoegenActieveSpeler();
+                    omschrijvingenKaarten.forEach((item) -> {
+                        System.out.println(item);
+                     });
+                    
                     while(index == -1) {
                         System.out.println("Selecteer kaart" + (i+1) + " voor " + speler);
                         index = omschrijvingenKaarten.indexOf(br.readLine());
                         if(index == -1) System.out.println("Geen geldige selectie.");
                     }
                     dc.selecteerKaartVoorActieveSpeler(index);
+                    
+                    
+                   
+                   
                 }
                 dc.maakWedstrijdStapelVoorActieveSpeler();
             } catch (IOException ex) {
                 Logger.getLogger(StartUp.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-        } while(aantalSpelers != 0);     
+        } while(aantalSpelers != 0);    
+        
+        
+        System.out.println("Start!");
+        //we starten met het spelen van de wedstrijd
+        List<String> winnaarInfo;
+        do {
+            winnaarInfo = dc.geefWinnaar();
+            
+            //speel set volgens UC6
+            
+        } while(winnaarInfo==null);
+        
+        System.out.println(winnaarInfo.get(0) + " heeft gewonnen!");
+        System.out.println("Nieuwe krediet: " + winnaarInfo.get(1));
+        
+        
     }
 }

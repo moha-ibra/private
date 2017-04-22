@@ -15,9 +15,7 @@ public class Speler {
     private BigDecimal krediet;
     private List<Kaart> startStapel = new ArrayList<>();
     private List<Kaart> wedstrijdStapel =  new ArrayList<>();
-    
-  
-
+   
     public Speler(String naam, int geboortejaar) {
         setNaam(naam);
         setGeboortejaar(geboortejaar);
@@ -81,7 +79,7 @@ public class Speler {
         
         
         //deze output is enkel voor debuggen. is niet nodig volgens use case om de uiteindelijke wedstrijdstapel te printen
-//        System.out.println("De wedstrijdstapel voor " + this.getNaam());
+        //System.out.println("De wedstrijdstapel voor " + this.getNaam());
 //        wedstrijdStapel.forEach((kaart)->{
 //            System.out.println(kaart.toString());
 //        });

@@ -16,12 +16,14 @@ public class Wedstrijd {
     private static final int WEDSTRIJD_AANTAL = 2;
 
     private List<Speler> spelSpelers;
-    private int[] gewonnenSets;
-    private Speler winnaar;
-    
+    private int[] gewonnenSetsPerSpeler;
+     
     public Wedstrijd() {
         this.spelSpelers = new ArrayList<>();
-        this.gewonnenSets = new int[WEDSTRIJD_AANTAL];
+        this.gewonnenSetsPerSpeler = new int[WEDSTRIJD_AANTAL];
+        
+        this.gewonnenSetsPerSpeler[0] = 3;
+        this.gewonnenSetsPerSpeler[1] = 1;
     }
     
     public Speler geefSpelerMetNaam(String naam) {
@@ -41,7 +43,7 @@ public class Wedstrijd {
     
     private void verhoogGewonnenSetsSpeler(Speler speler) {
         int index = spelSpelers.indexOf(speler);
-        gewonnenSets[index]++;
+        gewonnenSetsPerSpeler[index]++;
     }
     
     public List<Speler> geefSpelersZonderWedstrijdStapel() {
@@ -52,5 +54,19 @@ public class Wedstrijd {
         });
         
         return spelersZonderWedstrijdStapel;
+    }
+    
+    public int isWedstrijdGedaan() {
+        for(int i=0; i<gewonnenSetsPerSpeler.length; i++) {
+            if(gewonnenSetsPerSpeler[i]==3) return i;
+        }
+        
+        return -1; 
+    }
+    
+    public Speler geefWinnaar() {
+        int index = this.isWedstrijdGedaan();
+        return spelSpelers.get(index);
+        
     }
 }
