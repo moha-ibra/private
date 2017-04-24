@@ -16,10 +16,13 @@ public class Wedstrijd {
     private static final int WEDSTRIJD_AANTAL = 2;
 
     private List<Speler> spelSpelers;
+    private List<List<Kaart>> spelBord;
     private int[] gewonnenSetsPerSpeler;
+    private int aantalSetsGespeeld = 0;
      
     public Wedstrijd() {
         this.spelSpelers = new ArrayList<>();
+        this.spelBord = new ArrayList<>(WEDSTRIJD_AANTAL); 
         this.gewonnenSetsPerSpeler = new int[WEDSTRIJD_AANTAL];
         
         this.gewonnenSetsPerSpeler[0] = 3;

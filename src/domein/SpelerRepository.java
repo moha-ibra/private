@@ -18,6 +18,7 @@ public class SpelerRepository {
     }
     
     public void voegToe(Speler speler) {
+       
        spelers.add(speler);
     }
     

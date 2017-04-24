@@ -9,6 +9,7 @@ public class Kaart {
     private int waarde; //altijd positief getal
     private String omschrijving; 
     private static List<Kaart> standaardStartStapel; //de standaard stapel moet niet telkens opnieuw gemaakt worden want is voor elk object hetzelfde. Vandaar static
+    private static List<Kaart> standaardSetStapel; //de standaard setstapel. 4x10 kaart van 1 tot 10. 
     private static int AANTAL_SELECTIE_KAARTEN = 6;
    
     public Kaart(int type, int waarde) {
@@ -88,6 +89,20 @@ public class Kaart {
     
     public static List<Kaart> geefKopieVanStandaardStartStapel() {
         return new ArrayList<>(standaardStartStapel);
+    }
+    
+    public static void initialiseerStandaardSetStapel() {
+        standaardSetStapel = new ArrayList<>();
+        
+        for(int i=0; i<4; i++) {
+            for(int j=1; j<=10; j++) {
+                standaardSetStapel.add(new Kaart(1, j));
+            }
+        }
+    }
+    
+    public static List<Kaart> geefKopieVanStandaardSetStapel() {
+        return new ArrayList<>(standaardSetStapel);
     }
     
     public static int geefAantalSelectieKaarten() {

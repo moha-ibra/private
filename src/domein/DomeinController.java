@@ -16,6 +16,7 @@ public class DomeinController {
         wedstrijd = new Wedstrijd();
         spelSpelers = new ArrayList<>();
         Kaart.initialiseerStandaardStartStapel();
+        Kaart.initialiseerStandaardSetStapel();
         
     }
     
