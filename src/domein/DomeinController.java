@@ -1,12 +1,12 @@
 package domein;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DomeinController {
     
     private Speler speler; //de geselecteerde speler
+    private WedstrijdSpeler wedstrijdspeler; //de geselecteerde wedstrijdspeler
     private SpelerRepository spelerRepository; //alle spelers
     private Wedstrijd wedstrijd; //de wedstrijd
     private List<Speler> spelSpelers;
@@ -80,7 +80,7 @@ public class DomeinController {
     }
     
     public List<String> geefSpelersZonderWedstrijdStapel() {
-        List<Speler> spelersZonderWedstrijdStapel = this.wedstrijd.geefSpelersZonderWedstrijdStapel();
+        List<WedstrijdSpeler> spelersZonderWedstrijdStapel = this.wedstrijd.geefSpelersZonderWedstrijdStapel();
        
         List<String> namenSpelersZonderWedstrijdStapel = new ArrayList<>();
         spelersZonderWedstrijdStapel.forEach((item) -> {
@@ -92,6 +92,7 @@ public class DomeinController {
     }
     public void selecteerActieveSpelerVoorWedstrijdStapel(String naam) {
         this.speler = this.wedstrijd.geefSpelerMetNaam(naam); 
+        this.wedstrijdspeler = this.wedstrijd.geefSpelerMetNaam(naam);
     }
     public List<String> kaartenToevoegenActieveSpeler() {
         List<String> startStapel = new ArrayList<>();
@@ -106,13 +107,13 @@ public class DomeinController {
     }
     
     public void selecteerKaartVoorActieveSpeler(int index) {
-        Kaart k = this.speler.geefStartStapel().get(index);
-        this.speler.geefStartStapel().remove(index);
-        this.speler.voegKaartToeAanWedstrijdStapel(k);
+        Kaart k = this.wedstrijdspeler.geefStartStapel().get(index);
+        this.wedstrijdspeler.geefStartStapel().remove(index);
+        this.wedstrijdspeler.voegKaartToeAanWedstrijdStapel(k);
     }
     
     public void maakWedstrijdStapelVoorActieveSpeler() {
-        this.speler.maakWedstrijdStapel();
+        this.wedstrijdspeler.maakWedstrijdStapel();
         
     }
     
@@ -120,10 +121,11 @@ public class DomeinController {
         if(this.wedstrijd.isWedstrijdGedaan() == -1) return null;
         
         List<String> winnaarInfo = new ArrayList<>();
-        Speler winnaar = this.wedstrijd.geefWinnaar();
-        winnaar.voegKredietToe(5);
-        winnaarInfo.add(winnaar.getNaam());
-        winnaarInfo.add(winnaar.getKrediet().toPlainString());
+        WedstrijdSpeler winnaar = this.wedstrijd.geefWinnaar();
+        Speler winnaarInRepo = this.spelerRepository.geefSpelerMetNaam(winnaar.getNaam());
+        winnaarInRepo.voegKredietToe(5);
+        winnaarInfo.add(winnaarInRepo.getNaam());
+        winnaarInfo.add(winnaarInRepo.getKrediet().toPlainString());
         
         return winnaarInfo;
     }

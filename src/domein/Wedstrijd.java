@@ -15,42 +15,35 @@ import java.util.List;
 public class Wedstrijd {
     private static final int WEDSTRIJD_AANTAL = 2;
 
-    private List<Speler> spelSpelers;
+    private List<WedstrijdSpeler> spelSpelers;
+    private WedstrijdSpeler spelerAanBeurt;
     private List<List<Kaart>> spelBord;
-    private int[] gewonnenSetsPerSpeler;
     private int aantalSetsGespeeld = 0;
      
     public Wedstrijd() {
         this.spelSpelers = new ArrayList<>();
-        this.spelBord = new ArrayList<>(WEDSTRIJD_AANTAL); 
-        this.gewonnenSetsPerSpeler = new int[WEDSTRIJD_AANTAL];
-        
-        this.gewonnenSetsPerSpeler[0] = 3;
-        this.gewonnenSetsPerSpeler[1] = 1;
     }
     
-    public Speler geefSpelerMetNaam(String naam) {
-        for(Speler sp : spelSpelers) {
+    public WedstrijdSpeler geefSpelerMetNaam(String naam) {
+        for(WedstrijdSpeler sp : spelSpelers) {
             if(sp.getNaam().equals(naam)) return sp;
         }
         return null;   
     }
     
     public void registreerWedstrijd(List<Speler> spelers) {
-        spelSpelers.addAll(spelers);
+        spelers.forEach((speler) -> {
+            spelSpelers.add(new WedstrijdSpeler(speler.getNaam(), speler.getGeboortejaar(), speler.getKrediet()));
+        }) ;
+        
     }
      
     public int geefMaximumAantalSpelers() {
         return WEDSTRIJD_AANTAL;
     }
-    
-    private void verhoogGewonnenSetsSpeler(Speler speler) {
-        int index = spelSpelers.indexOf(speler);
-        gewonnenSetsPerSpeler[index]++;
-    }
-    
-    public List<Speler> geefSpelersZonderWedstrijdStapel() {
-        List<Speler> spelersZonderWedstrijdStapel = new ArrayList<>();
+     
+    public List<WedstrijdSpeler> geefSpelersZonderWedstrijdStapel() {
+        List<WedstrijdSpeler> spelersZonderWedstrijdStapel = new ArrayList<>();
        
         spelSpelers.forEach((item) -> {
             if(item.geefWedstrijdStapel().isEmpty()) spelersZonderWedstrijdStapel.add(item);
@@ -60,14 +53,15 @@ public class Wedstrijd {
     }
     
     public int isWedstrijdGedaan() {
-        for(int i=0; i<gewonnenSetsPerSpeler.length; i++) {
-            if(gewonnenSetsPerSpeler[i]==3) return i;
+        int index = -1;
+        for(WedstrijdSpeler speler : spelSpelers) {
+            if(speler.geefAantalGewonnenSets() == 3) index = spelSpelers.indexOf(speler);
         }
-        
-        return -1; 
+       
+        return index; 
     }
     
-    public Speler geefWinnaar() {
+    public WedstrijdSpeler geefWinnaar() {
         int index = this.isWedstrijdGedaan();
         return spelSpelers.get(index);
         

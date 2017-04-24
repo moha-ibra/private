@@ -16,8 +16,8 @@ public class Speler {
     private String naam;
     private int geboortejaar;
     private BigDecimal krediet;
-    private List<Kaart> startStapel = new ArrayList<>();
-    private List<Kaart> wedstrijdStapel =  new ArrayList<>();
+    private final List<Kaart> startStapel = new ArrayList<>();
+    
    
     public Speler(String naam, int geboortejaar) {
         setNaam(naam);
@@ -44,8 +44,6 @@ public class Speler {
         }
 
         this.naam = naam;
-        
-        
     }
 
     public int getGeboortejaar() {
@@ -76,28 +74,5 @@ public class Speler {
     
     public List<Kaart> geefStartStapel() {
         return this.startStapel;
-    }
-    
-    public List<Kaart> geefWedstrijdStapel() {
-        return wedstrijdStapel;
-    }
-     
-    public void voegKaartToeAanWedstrijdStapel(Kaart k) {
-        this.wedstrijdStapel.add(k);
-    }
-    
-    public void maakWedstrijdStapel() {
-        //er worden er 4 at random geselecteerd uit de geselecteerde kaarten (6). Dit is hetzelfde als er 2 verwijderen.
-        
-        Collections.shuffle(wedstrijdStapel);
-        wedstrijdStapel.subList(4, wedstrijdStapel.size()).clear();
-        
-        
-        //deze output is enkel voor debuggen. is niet nodig volgens use case om de uiteindelijke wedstrijdstapel te printen
-        //System.out.println("De wedstrijdstapel voor " + this.getNaam());
-//        wedstrijdStapel.forEach((kaart)->{
-//            System.out.println(kaart.toString());
-//        });
-        
     }
 }
