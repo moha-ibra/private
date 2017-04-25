@@ -6,6 +6,7 @@
 package domein;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -15,9 +16,9 @@ import java.util.List;
 public class Wedstrijd {
     private static final int WEDSTRIJD_AANTAL = 2;
 
-    private List<WedstrijdSpeler> spelSpelers;
+    private final List<WedstrijdSpeler> spelSpelers;
     private WedstrijdSpeler spelerAanBeurt;
-    private List<List<Kaart>> spelBord;
+    private List<Kaart> setStapel;
     private int aantalSetsGespeeld = 0;
      
     public Wedstrijd() {
@@ -66,4 +67,14 @@ public class Wedstrijd {
         return spelSpelers.get(index);
         
     }
+    
+    public void maakSetStapel() {
+        this.setStapel = Kaart.geefKopieVanStandaardSetStapel();
+        this.schudSetStapel();
+    }
+    
+    private void schudSetStapel() {
+        Collections.shuffle(this.setStapel);
+    }
+   
 }

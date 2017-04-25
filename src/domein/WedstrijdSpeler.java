@@ -17,7 +17,7 @@ import java.util.List;
 public class WedstrijdSpeler extends Speler {
     
     private List<Kaart> wedstrijdStapel =  new ArrayList<>();
-    private List<Kaart> spelBord = new ArrayList<>(9);
+    private List<Kaart> spelBord = new ArrayList<>(9); //spelbord is 9 kaarten groot
     private int setScore = 0;
     private int aantalGewonnenSets = 0;
     private boolean aanBeurt = false;

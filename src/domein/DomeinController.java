@@ -1,5 +1,7 @@
 package domein;
 
+import exceptions.SpelerBestaatAlException;
+import exceptions.SpelerNietGevondenException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,9 +9,9 @@ public class DomeinController {
     
     private Speler speler; //de geselecteerde speler
     private WedstrijdSpeler wedstrijdspeler; //de geselecteerde wedstrijdspeler
-    private SpelerRepository spelerRepository; //alle spelers
-    private Wedstrijd wedstrijd; //de wedstrijd
-    private List<Speler> spelSpelers;
+    private final SpelerRepository spelerRepository; //alle spelers
+    private final Wedstrijd wedstrijd; //de wedstrijd
+    private final List<Speler> spelSpelers; //de geselecteerde spelerS 
 
     public DomeinController(){
         spelerRepository = new SpelerRepository();
@@ -22,23 +24,21 @@ public class DomeinController {
     
     public void maakSpeler(String naam, int geboortejaar) {
         this.speler = new Speler(naam, geboortejaar);
+        if(spelerRepository.geefSpelerMetNaam(naam) != null) {
+            throw new SpelerBestaatAlException("Speler met naam " + naam + " bestaat reeds.");
+        }
         spelerRepository.voegToe(speler);
     }
     
     //maakt een lijst van de info van de actieve speler
     public List<String> geefInfoSpeler() {
         ArrayList<String> info = new ArrayList<>();
+        
         String naam = speler.getNaam();
-        //String jaar = Integer.toString(speler.getGeboortejaar());
         String krediet = speler.getKrediet().toPlainString();
      
         info.add(naam);
-       //info.add(jaar);
         info.add(krediet);
-        
-        
-        //System.out.println(naam + ", geboren in " + jaar + ", heeft " + krediet + " krediet");
-        
         return info;
     }
     
@@ -57,7 +57,6 @@ public class DomeinController {
         
         alleSpelers.forEach((item) -> {
             info.add(item.getNaam());
-            //info.add(Integer.toString(item.getGeboortejaar()));
         });
         
         return info;
@@ -72,6 +71,8 @@ public class DomeinController {
       
         if(speler != null)
             spelSpelers.add(speler);
+        else
+            throw new SpelerNietGevondenException("Speler met naam " + naam + "kan niet gevonden worden.");
         
     }
     
@@ -91,8 +92,9 @@ public class DomeinController {
         
     }
     public void selecteerActieveSpelerVoorWedstrijdStapel(String naam) {
-        this.speler = this.wedstrijd.geefSpelerMetNaam(naam); 
         this.wedstrijdspeler = this.wedstrijd.geefSpelerMetNaam(naam);
+        this.speler = this.wedstrijdspeler; 
+        
     }
     public List<String> kaartenToevoegenActieveSpeler() {
         List<String> startStapel = new ArrayList<>();
@@ -129,5 +131,4 @@ public class DomeinController {
         
         return winnaarInfo;
     }
-
 }
