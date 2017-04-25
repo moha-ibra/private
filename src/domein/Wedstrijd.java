@@ -20,6 +20,7 @@ public class Wedstrijd {
     private WedstrijdSpeler spelerAanBeurt;
     private List<Kaart> setStapel;
     private int aantalSetsGespeeld = 0;
+    private int beurt = 0;
      
     public Wedstrijd() {
         this.spelSpelers = new ArrayList<>();
@@ -75,6 +76,44 @@ public class Wedstrijd {
     
     private void schudSetStapel() {
         Collections.shuffle(this.setStapel);
+    }
+    
+    public void bepaalBeurt() {
+        //eerste beurt oudste speler aan beurt
+        if(beurt==0) {
+            spelerAanBeurt = spelSpelers.get(0);
+            for(WedstrijdSpeler speler : spelSpelers) {
+                if(speler.getGeboortejaar() < spelerAanBeurt.getGeboortejaar())
+                    spelerAanBeurt = speler;
+            }
+        }
+        else {
+            int index = spelSpelers.indexOf(spelerAanBeurt);
+            int volgende = (index + 1) % WEDSTRIJD_AANTAL;
+            spelerAanBeurt = spelSpelers.get(volgende);
+        }
+        spelerAanBeurt.startBeurt();
+        beurt++;
+    }
+    
+    public void kaartSetStapelNaarSpelbord() {
+        //bovenste kaart van de setstapel naar het spelbord van de speler aan de beurt
+        spelerAanBeurt.kaartOpSpelbord(setStapel.get(0));
+        setStapel.remove(0);
+    }
+    
+    public List<String> toonWedstrijdSituatie() {
+        List<String> situatie = new ArrayList<>();
+        
+        situatie.add("Speler aan de beurt: " + spelerAanBeurt.getNaam());
+        situatie.add("Setscore: " + Integer.toString(spelerAanBeurt.geefSetScore()));
+        situatie.add("Spelbord:");
+        spelerAanBeurt.geefSpelbord().forEach((kaart)->{
+            situatie.add(kaart.getOmschrijving());
+        });
+        
+        return situatie;
+        
     }
    
 }

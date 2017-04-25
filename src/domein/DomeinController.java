@@ -131,4 +131,18 @@ public class DomeinController {
         
         return winnaarInfo;
     }
+    
+    public void startNieuweSet() {
+        this.wedstrijd.maakSetStapel();
+        this.wedstrijd.bepaalBeurt();
+        this.wedstrijd.kaartSetStapelNaarSpelbord();
+    }
+    
+    public List<String> toonWedstrijdSituatie() {
+        return this.wedstrijd.toonWedstrijdSituatie();
+    }
+    
+    
+    
+    
 }

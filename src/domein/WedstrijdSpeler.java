@@ -21,6 +21,7 @@ public class WedstrijdSpeler extends Speler {
     private int setScore = 0;
     private int aantalGewonnenSets = 0;
     private boolean aanBeurt = false;
+    private boolean spelBordBevroren = false;
     
     public WedstrijdSpeler(String naam, int geboortejaar, BigDecimal krediet) {
         super(naam, geboortejaar);
@@ -62,6 +63,32 @@ public class WedstrijdSpeler extends Speler {
     
     public void kaartOpSpelbord(Kaart k) {
         this.spelBord.add(k);
+        
+        //bereken setscore
+        spelBord.forEach((kaart)->{
+            int type = kaart.getType();
+           
+            switch (type) {
+            case -1:
+                this.setScore -= kaart.getWaarde();
+                break;     
+            default:
+                this.setScore += kaart.getWaarde();
+                break;
+             }
+        });
+        
+        
+    }
+    
+    public boolean isSpelbordBevroren() {
+        return this.spelBordBevroren;
+    }
+    
+    
+    
+    public void bevriesSpelbord(boolean b) {
+        this.spelBordBevroren = b;
     }
     
     public List<Kaart> geefSpelbord() {
