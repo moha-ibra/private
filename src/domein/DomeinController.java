@@ -138,9 +138,64 @@ public class DomeinController {
         this.wedstrijd.kaartSetStapelNaarSpelbord();
     }
     
-    public List<String> toonWedstrijdSituatie() {
-        return this.wedstrijd.toonWedstrijdSituatie();
+     public List<String> toonWedstrijdSituatie() {
+        List<String> situatie = new ArrayList<>();
+        this.wedstrijdspeler = this.wedstrijd.geefSpelerAanDeBeurt();
+        this.speler = this.wedstrijdspeler;
+        
+        
+        situatie.add("Speler aan de beurt: " + this.wedstrijdspeler.getNaam());
+        situatie.add("Setscore: " + Integer.toString(this.wedstrijdspeler.geefSetScore()));
+        situatie.add("Spelbord:");
+        this.wedstrijdspeler.geefSpelbord().forEach((kaart)->{
+            situatie.add(kaart.getOmschrijving());
+        });
+        
+        return situatie;
+        
     }
+     
+    public void beeindigBeurtSpeler() {
+        this.wedstrijdspeler.beeindigBeurt();
+        this.wedstrijd.bepaalBeurt();
+    }
+    
+    public void bevriesSpelbordSpeler() {
+        this.wedstrijdspeler.bevriesSpelbord(true);
+        this.wedstrijdspeler.beeindigBeurt();
+        this.wedstrijd.bepaalBeurt();
+    }
+    
+    public List<String> geefWedstrijdstapelSpelerAanBeurt() {
+        List<String> stapel = new ArrayList<>();
+        
+        this.wedstrijdspeler.geefWedstrijdStapel().forEach((kaart)->{
+            stapel.add(kaart.toString());
+        });
+        
+        return stapel;
+    }
+    
+    public void speelWedstrijdstapelKaart(int index) {
+        Kaart k = this.wedstrijdspeler.geefWedstrijdStapel().get(index);
+        this.wedstrijdspeler.kaartOpSpelbord(k);
+        this.wedstrijdspeler.beeindigBeurt();
+        this.wedstrijd.bepaalBeurt();
+    }
+    
+    public void registreerWissel(int index, int type) {
+        Kaart k = this.wedstrijdspeler.geefWedstrijdStapel().get(index);
+        k.setType(type);
+    }
+    
+    public String geefSetWinnaar() {
+        String winnaarNaam = this.wedstrijd.isSetGedaan();
+        
+        if(winnaarNaam != null) return winnaarNaam;
+        
+        return null;
+    }
+     
     
     
     

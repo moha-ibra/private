@@ -88,9 +88,11 @@ public class Wedstrijd {
             }
         }
         else {
-            int index = spelSpelers.indexOf(spelerAanBeurt);
-            int volgende = (index + 1) % WEDSTRIJD_AANTAL;
-            spelerAanBeurt = spelSpelers.get(volgende);
+            do {
+                int index = spelSpelers.indexOf(spelerAanBeurt);
+                int volgende = (index + 1) % WEDSTRIJD_AANTAL;
+                spelerAanBeurt = spelSpelers.get(volgende);
+            } while(spelerAanBeurt.isSpelbordBevroren());
         }
         spelerAanBeurt.startBeurt();
         beurt++;
@@ -102,18 +104,28 @@ public class Wedstrijd {
         setStapel.remove(0);
     }
     
-    public List<String> toonWedstrijdSituatie() {
-        List<String> situatie = new ArrayList<>();
-        
-        situatie.add("Speler aan de beurt: " + spelerAanBeurt.getNaam());
-        situatie.add("Setscore: " + Integer.toString(spelerAanBeurt.geefSetScore()));
-        situatie.add("Spelbord:");
-        spelerAanBeurt.geefSpelbord().forEach((kaart)->{
-            situatie.add(kaart.getOmschrijving());
-        });
-        
-        return situatie;
-        
+    public WedstrijdSpeler geefSpelerAanDeBeurt() {
+        return this.spelerAanBeurt;
     }
-   
+    
+    public String isSetGedaan() {
+        int aantalBevrorenSpelborden = 0;
+        for(WedstrijdSpeler speler : spelSpelers) {
+            
+            if(speler.geefSetScore() > 20) return bepaalWinnaar();
+            else if(speler.geefSpelbord().size() == 9) return bepaalWinnaar();
+            else if(speler.isSpelbordBevroren()) aantalBevrorenSpelborden++;
+            
+            if(aantalBevrorenSpelborden == WEDSTRIJD_AANTAL) return bepaalWinnaar();
+               
+        }
+        
+        return null; //set is nog niet gedaan
+    }
+    
+    private String bepaalWinnaar() {
+        
+       
+        
+    } 
 }
