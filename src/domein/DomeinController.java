@@ -11,12 +11,12 @@ public class DomeinController {
     private WedstrijdSpeler wedstrijdspeler; //de geselecteerde wedstrijdspeler
     private final SpelerRepository spelerRepository; //alle spelers
     private final Wedstrijd wedstrijd; //de wedstrijd
-    private final List<Speler> spelSpelers; //de geselecteerde spelerS 
+    
 
     public DomeinController(){
         spelerRepository = new SpelerRepository();
         wedstrijd = new Wedstrijd();
-        spelSpelers = new ArrayList<>();
+      
         Kaart.initialiseerStandaardStartStapel();
         Kaart.initialiseerStandaardSetStapel();
         
@@ -70,15 +70,13 @@ public class DomeinController {
         this.speler = spelerRepository.geefSpelerMetNaam(naam);
       
         if(speler != null)
-            spelSpelers.add(speler);
+            this.wedstrijd.registreerWedstrijdSpeler(speler);
         else
             throw new SpelerNietGevondenException("Speler met naam " + naam + "kan niet gevonden worden.");
         
     }
     
-    public void nieuweWedstrijd() {
-        this.wedstrijd.registreerWedstrijd(spelSpelers); 
-    }
+   
     
     public List<String> geefSpelersZonderWedstrijdStapel() {
         List<WedstrijdSpeler> spelersZonderWedstrijdStapel = this.wedstrijd.geefSpelersZonderWedstrijdStapel();
@@ -108,9 +106,9 @@ public class DomeinController {
         return Kaart.geefAantalSelectieKaarten();
     }
     
-    public void selecteerKaartVoorActieveSpeler(int index) {
-        Kaart k = this.wedstrijdspeler.geefStartStapel().get(index);
-        this.wedstrijdspeler.geefStartStapel().remove(index);
+    public void selecteerKaartVoorActieveSpeler(IKaart ik) {
+        Kaart k = this.wedstrijdspeler.geefStartstapelKaart(ik.getType(), ik.getWaarde());
+        this.wedstrijdspeler.geefStartStapel().remove(k);
         this.wedstrijdspeler.voegKaartToeAanWedstrijdStapel(k);
     }
     
@@ -138,20 +136,19 @@ public class DomeinController {
         this.wedstrijd.kaartSetStapelNaarSpelbord();
     }
     
-     public List<String> toonWedstrijdSituatie() {
-        List<String> situatie = new ArrayList<>();
-        this.wedstrijdspeler = this.wedstrijd.geefSpelerAanDeBeurt();
-        this.speler = this.wedstrijdspeler;
-        
-        
-        situatie.add("Speler aan de beurt: " + this.wedstrijdspeler.getNaam());
-        situatie.add("Setscore: " + Integer.toString(this.wedstrijdspeler.geefSetScore()));
-        situatie.add("Spelbord:");
-        this.wedstrijdspeler.geefSpelbord().forEach((kaart)->{
-            situatie.add(kaart.getOmschrijving());
-        });
-        
-        return situatie;
+    public String toonWedstrijdSituatie() {
+       String situatie;
+       this.wedstrijdspeler = this.wedstrijd.geefSpelerAanDeBeurt();
+       this.speler = this.wedstrijdspeler;
+       
+       List<String> kaarten = new ArrayList<>();
+       this.wedstrijdspeler.geefSpelbord().forEach((kaart)->{
+           kaarten.add(kaart.toString());
+       });
+       
+       String alleKaarten = String.join(" ,", kaarten);
+       situatie = String.format("Speler aan beurt:%sScore:%d\n%s", this.wedstrijdspeler.getNaam(), this.wedstrijdspeler.geefSetScore(), alleKaarten);               
+       return situatie;
         
     }
      
@@ -166,25 +163,19 @@ public class DomeinController {
         this.wedstrijd.bepaalBeurt();
     }
     
-    public List<String> geefWedstrijdstapelSpelerAanBeurt() {
-        List<String> stapel = new ArrayList<>();
-        
-        this.wedstrijdspeler.geefWedstrijdStapel().forEach((kaart)->{
-            stapel.add(kaart.toString());
-        });
-        
-        return stapel;
+    public List<IKaart> geefWedstrijdstapelSpelerAanBeurt() {
+        return this.wedstrijdspeler.geefWedstrijdStapel();
     }
     
-    public void speelWedstrijdstapelKaart(int index) {
-        Kaart k = this.wedstrijdspeler.geefWedstrijdStapel().get(index);
-        this.wedstrijdspeler.kaartOpSpelbord(k);
+    public void speelWedstrijdstapelKaart(IKaart ik) {
+
+        this.wedstrijdspeler.kaartOpSpelbord(ik);
         this.wedstrijdspeler.beeindigBeurt();
         this.wedstrijd.bepaalBeurt();
     }
     
     public void registreerWissel(int index, int type) {
-        Kaart k = this.wedstrijdspeler.geefWedstrijdStapel().get(index);
+        Kaart k = this.wedstrijdspeler.geefWedstrijdstapelKaart(index, type);
         k.setType(type);
     }
     

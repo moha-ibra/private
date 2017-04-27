@@ -103,7 +103,6 @@ public class StartUp extends Application {
             Logger.getLogger(StartUp.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        dc.nieuweWedstrijd();
         System.out.println("Er is een spel pazaak aangemaakt.\n\n");
         
         int aantalSpelers;

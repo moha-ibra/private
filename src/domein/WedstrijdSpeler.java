@@ -28,10 +28,12 @@ public class WedstrijdSpeler extends Speler {
         super.voegKredietToe(krediet.doubleValue());
     }
     
-    public List<Kaart> geefWedstrijdStapel() {
-        return wedstrijdStapel;
+    public List<IKaart> geefWedstrijdStapel() {
+        List<IKaart> stapel = new ArrayList<>();
+        stapel.addAll(this.wedstrijdStapel);
+        return stapel;
     }
-     
+      
     public void voegKaartToeAanWedstrijdStapel(Kaart k) {
         this.wedstrijdStapel.add(k);
     }
@@ -61,7 +63,12 @@ public class WedstrijdSpeler extends Speler {
         this.aanBeurt = true;
     }
     
-    public void kaartOpSpelbord(Kaart k) {
+    public Kaart geefWedstrijdstapelKaart(int type, int waarde) {
+        return this.zoekKaart(this.wedstrijdStapel, type, waarde);
+    }
+    
+    public void kaartOpSpelbord(IKaart ik) {
+        Kaart k = this.zoekKaart(this.wedstrijdStapel, ik.getType(), ik.getWaarde());
         this.spelBord.add(k);
         
         //bereken setscore
@@ -85,14 +92,14 @@ public class WedstrijdSpeler extends Speler {
         return this.spelBordBevroren;
     }
     
-    
-    
     public void bevriesSpelbord(boolean b) {
         this.spelBordBevroren = b;
     }
     
-    public List<Kaart> geefSpelbord() {
-        return this.spelBord;
+    public List<IKaart> geefSpelbord() {
+        List<IKaart> bord = new ArrayList<>();
+        bord.addAll(this.spelBord);
+        return bord;
     }
     
     public int geefAantalGewonnenSets() {

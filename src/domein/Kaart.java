@@ -3,7 +3,7 @@ package domein;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Kaart {
+public class Kaart implements IKaart {
     
     private int type; //-1 of +1 of 0 (indien)
     private int waarde; //altijd positief getal

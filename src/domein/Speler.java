@@ -8,7 +8,6 @@ import exceptions.VerplichtPositiefGetalException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
 
 public class Speler {
@@ -72,7 +71,21 @@ public class Speler {
         
     }
     
-    public List<Kaart> geefStartStapel() {
-        return this.startStapel;
+    protected Kaart zoekKaart(List<Kaart> lijst, int type, int waarde) {
+         for(Kaart k : lijst) {
+            if(k.getType() == type && k.getWaarde() == waarde) return k;
+        }
+        
+        return null; //kaart bestaat niet in de lijst
+    }
+    
+    public Kaart geefStartstapelKaart(int type, int waarde) {
+        return this.zoekKaart(this.startStapel, type, waarde);
+    }
+    
+    public List<IKaart> geefStartStapel() {
+        List<IKaart> stapel = new ArrayList<>();
+        stapel.addAll(this.startStapel);
+        return stapel;
     }
 }

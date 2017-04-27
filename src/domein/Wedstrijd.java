@@ -18,7 +18,7 @@ public class Wedstrijd {
 
     private final List<WedstrijdSpeler> spelSpelers;
     private WedstrijdSpeler spelerAanBeurt;
-    private List<Kaart> setStapel;
+    private List<Kaart> setStapel; //40 kaarten 
     private int aantalSetsGespeeld = 0;
     private int beurt = 0;
      
@@ -33,10 +33,10 @@ public class Wedstrijd {
         return null;   
     }
     
-    public void registreerWedstrijd(List<Speler> spelers) {
-        spelers.forEach((speler) -> {
-            spelSpelers.add(new WedstrijdSpeler(speler.getNaam(), speler.getGeboortejaar(), speler.getKrediet()));
-        }) ;
+    public void registreerWedstrijdSpeler(Speler speler) {
+        
+        spelSpelers.add(new WedstrijdSpeler(speler.getNaam(), speler.getGeboortejaar(), speler.getKrediet()));
+      
         
     }
      
