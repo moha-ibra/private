@@ -1,6 +1,7 @@
 package gui;
 
 import domein.DomeinController;
+import domein.IKaart;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -122,47 +123,105 @@ public class StartUp extends Application {
                 int aantalSelectieKaarten = dc.geefAantalSelectieKaarten();
                 System.out.println("Selecteer " + aantalSelectieKaarten + " kaarten uit voor " + speler);
                 
-                List<String> omschrijvingenKaarten;
+                List<IKaart> kaarten;
+                int tellerKaart = 0;
                 
                 for(int i=0; i<aantalSelectieKaarten; i++) {
-                    int index = -1;
+                    boolean vlag = true;
                     System.out.println("Nog beschikbare kaarten voor " + speler);
-                    omschrijvingenKaarten = dc.kaartenToevoegenActieveSpeler();
-                    omschrijvingenKaarten.forEach((item) -> {
-                        System.out.println(item);
-                     });
+                    kaarten = dc.kaartenToevoegenActieveSpeler();
+                    int teller = 1;
                     
-                    while(index == -1) {
+                    for(IKaart item : kaarten) {
+                        System.out.println(String.format("%d:%s", teller, item.toString()));
+                        teller++;
+                     }
+                    
+                    while(vlag) {
                         System.out.println("Selecteer kaart" + (i+1) + " voor " + speler);
-                        index = omschrijvingenKaarten.indexOf(br.readLine());
-                        if(index == -1) System.out.println("Geen geldige selectie.");
+                        tellerKaart = Integer.parseInt(br.readLine());
+                        if(tellerKaart > 0 && tellerKaart <= kaarten.size()) vlag = false;
+                        if(vlag) System.out.println("Geen geldige selectie.");
                     }
-                    dc.selecteerKaartVoorActieveSpeler(index);
-                    
-                    
-                   
-                   
+                    dc.selecteerKaartVoorActieveSpeler(kaarten.get(tellerKaart-1));   
                 }
                 dc.maakWedstrijdStapelVoorActieveSpeler();
-            } catch (IOException ex) {
+            } catch (IOException | NumberFormatException ex) {
                 Logger.getLogger(StartUp.class.getName()).log(Level.SEVERE, null, ex);
             }
             
         } while(aantalSpelers != 0);    
         
         
-        System.out.println("Start!");
+        System.out.println("\n\n\nStart!");
         //we starten met het spelen van de wedstrijd
-        List<String> winnaarInfo;
+        String winnaarInfo;
+        
         do {
             winnaarInfo = dc.geefWinnaar();
+            String setWinnaarInfo = dc.geefSetWinnaar();
+            if(setWinnaarInfo != null) System.out.println("Set gewonnen door:" + setWinnaarInfo);
+           
+            dc.startNieuweSet();
+            System.out.println("We starten een set.");
             
-            //speel set volgens UC6
-            
-        } while(winnaarInfo==null);
+               
+            while(setWinnaarInfo == null) {
+                
+                System.out.println(dc.toonWedstrijdSituatie());
+                br = new BufferedReader(new InputStreamReader(System.in));
+                System.out.println("Selecteer actie:");
+                System.out.println(String.format("%s\n%s\n%s", "1:Beeindig beurt", "2:Speel wedstrijdkaart", "3:Bevries spelbord"));
+                try {
+                    int actie = Integer.parseInt(br.readLine());
+                    switch(actie) {
+                        case 1:
+                            dc.beeindigBeurtSpeler();
+                        break;
+                        case 2:
+                            List<IKaart> wedstrijdstapel = dc.geefWedstrijdstapelSpelerAanBeurt();
+                            if(wedstrijdstapel.isEmpty()) break;
+                            int teller = 1;
+                            for(IKaart item : wedstrijdstapel) {
+                                System.out.println(String.format("%d:%s", teller, item.toString()));
+                                teller++;
+                            }
+                            int menuItem = Integer.parseInt(br.readLine());
+                            IKaart geselecteerdeKaart = wedstrijdstapel.get(menuItem-1);
+
+                            if(geselecteerdeKaart.getType() == 0) {
+                                System.out.println(String.format("%s\n%s\n%s\n%s", geselecteerdeKaart.toString(), "Kies teken:", "1:+", "2:-"));
+                                int keuze;
+                                switch(Integer.parseInt(br.readLine())) {
+                                    case 2:
+                                        keuze = -1;
+                                        break;
+                                    default:
+                                        keuze = 1;
+                                        break;
+                                }
+                                dc.registreerWissel(geselecteerdeKaart, keuze);
+                            }
+
+                            dc.speelWedstrijdstapelKaart(geselecteerdeKaart); 
+                            break;
+                        case 3:
+                            dc.bevriesSpelbordSpeler();
+                            break;
+                        default:
+                            System.out.println("Geen geldige actie.");
+                            break;  
+                    }
+
+                }
+                catch(IOException | NumberFormatException ex) {
+                    Logger.getLogger(StartUp.class.getName()).log(Level.SEVERE, null, ex);
+                } 
+                setWinnaarInfo = dc.geefSetWinnaar();
+            }
+        } while(winnaarInfo==null); //er is nog geen winnaar
         
-        System.out.println(winnaarInfo.get(0) + " heeft gewonnen!");
-        System.out.println("Nieuwe krediet: " + winnaarInfo.get(1));
+       System.out.println(winnaarInfo);
         
         
     }

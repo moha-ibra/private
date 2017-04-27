@@ -28,14 +28,21 @@ public class WedstrijdSpeler extends Speler {
         super.voegKredietToe(krediet.doubleValue());
     }
     
+    public void resetSetVariabelen() {
+        this.spelBord.clear();
+        this.setScore = 0;
+        this.aanBeurt = false;
+        this.spelBordBevroren = false;
+    }
+    
     public List<IKaart> geefWedstrijdStapel() {
         List<IKaart> stapel = new ArrayList<>();
         stapel.addAll(this.wedstrijdStapel);
         return stapel;
     }
       
-    public void voegKaartToeAanWedstrijdStapel(Kaart k) {
-        this.wedstrijdStapel.add(k);
+    public void voegKaartToeAanWedstrijdStapel(IKaart ik) {
+        this.wedstrijdStapel.add(this.geefStartstapelKaart(ik.getType(), ik.getWaarde()));
     }
     
     public void maakWedstrijdStapel() {
@@ -67,11 +74,16 @@ public class WedstrijdSpeler extends Speler {
         return this.zoekKaart(this.wedstrijdStapel, type, waarde);
     }
     
-    public void kaartOpSpelbord(IKaart ik) {
-        Kaart k = this.zoekKaart(this.wedstrijdStapel, ik.getType(), ik.getWaarde());
+    public void verwijderWedstrijdstapelKaart(Kaart k) {
+        this.wedstrijdStapel.remove(k);
+    }
+    
+    public void kaartOpSpelbord(Kaart k) {
+        
         this.spelBord.add(k);
         
         //bereken setscore
+        this.setScore = 0;
         spelBord.forEach((kaart)->{
             int type = kaart.getType();
            
@@ -83,9 +95,7 @@ public class WedstrijdSpeler extends Speler {
                 this.setScore += kaart.getWaarde();
                 break;
              }
-        });
-        
-        
+        }); 
     }
     
     public boolean isSpelbordBevroren() {

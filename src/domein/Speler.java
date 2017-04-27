@@ -82,10 +82,15 @@ public class Speler {
     public Kaart geefStartstapelKaart(int type, int waarde) {
         return this.zoekKaart(this.startStapel, type, waarde);
     }
+    public void verwijderStartstapelKaart(int type, int waarde) {
+        this.startStapel.remove(this.zoekKaart(this.startStapel, type, waarde));
+    }
     
     public List<IKaart> geefStartStapel() {
         List<IKaart> stapel = new ArrayList<>();
         stapel.addAll(this.startStapel);
         return stapel;
     }
+    
+    
 }
