@@ -160,10 +160,17 @@ public class StartUp extends Application {
         do {
             winnaarInfo = dc.geefWinnaar();
             String setWinnaarInfo = dc.geefSetWinnaar();
-            if(setWinnaarInfo != null) System.out.println("Set gewonnen door:" + setWinnaarInfo);
-           
-            dc.startNieuweSet();
-            System.out.println("We starten een set.");
+            if(setWinnaarInfo != null) {
+                System.out.println("Set gewonnen door:" + setWinnaarInfo);
+                dc.startNieuweSet();
+            }
+            else {
+                System.out.println("We starten een set.");
+                dc.startNieuweSet();
+            }
+               
+            
+            
             
                
             while(setWinnaarInfo == null) {
