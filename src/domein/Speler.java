@@ -22,7 +22,7 @@ public class Speler {
         setNaam(naam);
         setGeboortejaar(geboortejaar);
         krediet = BigDecimal.ZERO;
-        startStapel.addAll(Kaart.geefKopieVanStandaardStartStapel());
+        startStapel.addAll(Stapel.geefKopieVanStandaardStartStapel());
         
     }
 

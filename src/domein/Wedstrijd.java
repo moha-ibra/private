@@ -15,6 +15,10 @@ import java.util.List;
  */
 public class Wedstrijd {
     private static final int WEDSTRIJD_AANTAL = 2;
+    private static final int AANTAL_SETS_EINDE_WEDSTRIJD = 3;
+    private static final int SPELBORD_VOL = 9;
+    private static final int LIMIET_SCORE_SPELBORD = 20;
+    
 
     private final List<WedstrijdSpeler> spelSpelers;
     private WedstrijdSpeler spelerAanBeurt;
@@ -58,11 +62,16 @@ public class Wedstrijd {
     public WedstrijdSpeler geefWinnaar() {
        
         for(WedstrijdSpeler speler : spelSpelers) {
-            if(speler.geefAantalGewonnenSets() == 3) return speler;
+            if(speler.geefAantalGewonnenSets() == AANTAL_SETS_EINDE_WEDSTRIJD) return speler;
         }
         
-        return null;
-        
+        return null;  
+    }
+    
+    public void startNieuweSet() {
+        this.resetSetVariabelen();
+        this.maakSetStapel();
+        this.bepaalBeurt();
     }
     
     public void resetSetVariabelen() {
@@ -75,7 +84,7 @@ public class Wedstrijd {
     }
     
     public void maakSetStapel() {
-        this.setStapel = Kaart.geefKopieVanStandaardSetStapel();
+        this.setStapel = Stapel.geefKopieVanStandaardSetStapel();
         this.schudSetStapel();
     }
     
@@ -123,11 +132,11 @@ public class Wedstrijd {
         
         for(WedstrijdSpeler speler : spelSpelers) {
             
-            if(speler.geefSetScore() > 20) {
+            if(speler.geefSetScore() > LIMIET_SCORE_SPELBORD) {
                 aantalSetsGespeeld++;
                 return bepaalWinnaar();
             }
-            else if(speler.geefSpelbord().size() == 9) {
+            else if(speler.geefSpelbord().size() == SPELBORD_VOL) {
                 aantalSetsGespeeld++;
                 return bepaalWinnaar();
             }
@@ -153,11 +162,11 @@ public class Wedstrijd {
                 WedstrijdSpeler s1 = spelSpelers.get(i);
                 WedstrijdSpeler s2 = spelSpelers.get(j);
                 
-                if(s1.geefSetScore() <=20 && s1.geefSpelbord().size()==9) winnaar = s1; //<=20 en spelbord vol voor s1
-                else if(s2.geefSetScore() <=20 && s2.geefSpelbord().size()==9) winnaar = s2; //<=20 en spelbord vol voor s2
-                else if(s1.geefSetScore() > 20 && s2.geefSetScore() <= 20) winnaar = s2; //s1 bust en s2 <=20
-                else if(s1.geefSetScore() <=20 && s2.geefSetScore() > 20) winnaar = s1; //s2 bust en s1 <=20
-                else if(s1.geefSetScore() > 20 && s2.geefSetScore() > 20) gelijkspel = true; //beide bust
+                if(s1.geefSetScore() <=LIMIET_SCORE_SPELBORD && s1.geefSpelbord().size()==SPELBORD_VOL) winnaar = s1; //<=20 en spelbord vol voor s1
+                else if(s2.geefSetScore() <=LIMIET_SCORE_SPELBORD && s2.geefSpelbord().size()==SPELBORD_VOL) winnaar = s2; //<=20 en spelbord vol voor s2
+                else if(s1.geefSetScore() > LIMIET_SCORE_SPELBORD && s2.geefSetScore() <= LIMIET_SCORE_SPELBORD) winnaar = s2; //s1 bust en s2 <=20
+                else if(s1.geefSetScore() <=LIMIET_SCORE_SPELBORD && s2.geefSetScore() > LIMIET_SCORE_SPELBORD) winnaar = s1; //s2 bust en s1 <=20
+                else if(s1.geefSetScore() > LIMIET_SCORE_SPELBORD && s2.geefSetScore() > LIMIET_SCORE_SPELBORD) gelijkspel = true; //beide bust
                 else if(s1.geefSetScore() > s2.geefSetScore()) winnaar = s1; //beide niet bust en geen spelbord vol, s1 hoogste score
                 else if(s1.geefSetScore() < s2.geefSetScore()) winnaar = s2; //beide niet bust en geen spelbord vol, s2 hoogste score
                 else if(s1.geefSetScore() == s2.geefSetScore()) gelijkspel = true; //gelijke scores

@@ -17,15 +17,15 @@ public class DomeinController {
         spelerRepository = new SpelerRepository();
         wedstrijd = new Wedstrijd();
       
-        Kaart.initialiseerStandaardStartStapel();
-        Kaart.initialiseerStandaardSetStapel();
+        Stapel.initialiseerStandaardStartStapel();
+        Stapel.initialiseerStandaardSetStapel();
         
     }
     
     public void maakSpeler(String naam, int geboortejaar) {
         this.speler = new Speler(naam, geboortejaar);
         if(spelerRepository.geefSpelerMetNaam(naam) != null) {
-            throw new SpelerBestaatAlException("Speler met naam " + naam + " bestaat reeds.");
+            throw new SpelerBestaatAlException(String.format("Speler met naam %s bestaat reeds.", naam));
         }
         spelerRepository.voegToe(speler);
     }
@@ -69,10 +69,12 @@ public class DomeinController {
     public void selecteerSpeler(String naam) {
         this.speler = spelerRepository.geefSpelerMetNaam(naam);
       
-        if(speler != null)
-            this.wedstrijd.registreerWedstrijdSpeler(speler);
-        else
-            throw new SpelerNietGevondenException("Speler met naam " + naam + "kan niet gevonden worden.");
+        if(speler == null)
+            throw new SpelerNietGevondenException(String.format("De speler met naam %s kan niet gevonden worden.", naam));
+        
+        this.wedstrijd.registreerWedstrijdSpeler(speler);
+       
+            
         
     }
     
@@ -100,7 +102,7 @@ public class DomeinController {
     }
     
     public int geefAantalSelectieKaarten() {
-        return Kaart.geefAantalSelectieKaarten();
+        return Stapel.geefAantalSelectieKaarten();
     }
     
     public void selecteerKaartVoorActieveSpeler(IKaart ik) {
@@ -126,9 +128,7 @@ public class DomeinController {
     }
     
     public void startNieuweSet() {
-        this.wedstrijd.resetSetVariabelen();
-        this.wedstrijd.maakSetStapel();
-        this.wedstrijd.bepaalBeurt();
+        this.wedstrijd.startNieuweSet();
     }
     
     public String toonWedstrijdSituatie() {
@@ -184,10 +184,5 @@ public class DomeinController {
         
         if(winnaarNaam != null) return winnaarNaam;
         return null;
-    }
-     
-    
-    
-    
-    
+    }  
 }
