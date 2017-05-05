@@ -9,25 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-
 
 //In deze klasse komt de console implementatie van Pazaak.
-public class StartUp extends Application {
-    
-    @Override
-    public void start(Stage stage)
-    {
-        DomeinController controller = new DomeinController();
-        Scene scene = new Scene(new HoofdPaneel(controller), 600, 400);
-        scene.getStylesheets().add("/gui/styles.css");
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    
+public class StartUp {
+     
     public static void main(String... args){
         
         // In main enkel deze lijn toegevoegd
@@ -36,6 +21,12 @@ public class StartUp extends Application {
         System.out.println("Welkom");
         DomeinController dc = new DomeinController();
         System.out.println("We gaan eerst een aantal gebruikers aanmaken:");
+        dc.maakSpeler("Louise", 1998);
+        dc.maakSpeler("Hilke", 1997);
+        dc.maakSpeler("Bram", 1995);
+        dc.maakSpeler("Roel", 2001);
+        dc.maakSpeler("Marc", 1968);
+        dc.maakSpeler("Lieve", 1970);
         
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); 
         for(int i=0; i<2; i++) {

@@ -72,14 +72,8 @@ public class DomeinController {
         if(speler == null)
             throw new SpelerNietGevondenException(String.format("De speler met naam %s kan niet gevonden worden.", naam));
         
-        this.wedstrijd.registreerWedstrijdSpeler(speler);
-       
-            
-        
+        this.wedstrijd.registreerWedstrijdSpeler(speler);  
     }
-    
-   
-    
     public List<String> geefSpelersZonderWedstrijdStapel() {
         List<WedstrijdSpeler> spelersZonderWedstrijdStapel = this.wedstrijd.geefSpelersZonderWedstrijdStapel();
        
@@ -123,7 +117,7 @@ public class DomeinController {
         String winnaarInfo;
         Speler winnaarInRepo = this.spelerRepository.geefSpelerMetNaam(winnaar.getNaam());
         winnaarInRepo.voegKredietToe(5);
-        winnaarInfo = String.format("Winnaar:%sKrediet:%s", winnaarInRepo.getNaam(), winnaarInRepo.getKrediet().toPlainString());
+        winnaarInfo = String.format("Winnaar van de wedstrijd: %s Krediet: %s ", winnaarInRepo.getNaam(), winnaarInRepo.getKrediet().toPlainString());
         return winnaarInfo;
     }
     
@@ -142,7 +136,7 @@ public class DomeinController {
        });
        
        String alleKaarten = String.join(" ,", kaarten);
-       situatie = String.format("Speler aan beurt:%s Score:%d\n%s", this.wedstrijdspeler.getNaam(), this.wedstrijdspeler.geefSetScore(), alleKaarten);               
+       situatie = String.format("\nSpeler aan beurt: %s Score: %d\n%s", this.wedstrijdspeler.getNaam(), this.wedstrijdspeler.geefSetScore(), alleKaarten);               
        return situatie;
         
     }
