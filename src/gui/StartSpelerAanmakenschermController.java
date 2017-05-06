@@ -6,20 +6,18 @@
 package gui;
 
 import domein.DomeinController;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.List;
 import javafx.event.ActionEvent;
+import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
+import javafx.stage.Stage;
 
 
 public class StartSpelerAanmakenschermController extends GridPane {
@@ -30,8 +28,7 @@ public class StartSpelerAanmakenschermController extends GridPane {
     private Label lbNaam;
     @FXML
     private Label lbGeboorte;
-    @FXML
-    private Label lbSpelerAangemaakt;
+    
     @FXML
     private TextField txtNaam;
     @FXML
@@ -45,7 +42,7 @@ public class StartSpelerAanmakenschermController extends GridPane {
 
     public StartSpelerAanmakenschermController(DomeinController dc){
         
-        
+        this.dc = dc;
        FXMLLoader loader = new FXMLLoader(getClass().getResource("StartSpelerAanmakenscherm.fxml"));
         loader.setRoot(this);
         loader.setController(this);
@@ -54,7 +51,8 @@ public class StartSpelerAanmakenschermController extends GridPane {
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
-        this.dc = dc;
+        
+       
         
     }
     
@@ -63,17 +61,27 @@ public class StartSpelerAanmakenschermController extends GridPane {
         
         LocalDate input = pckrGeboortejaar.getValue();
         String naam = txtNaam.getText();
+        System.out.println(String.format("Naam %s, geboortejaar: %d", naam, input.getYear()));
         dc.maakSpeler(naam, input.getYear());
         
-        List<String> info = dc.geefInfoSpeler();
-        lbSpelerAangemaakt.setText(String.format("%s is succesvol aangemaakt. Krediet: %s", info.get(0), info.get(1)));
-        lbSpelerAangemaakt.setVisible(true);
+        Stage stage; 
+        stage = (Stage) btnSubmit.getScene().getWindow();
+        Scene scene = new Scene(new SpelerSuccesvolAangemaaktSchermController(this.dc));
         
+        stage.setScene(scene);
+        stage.show();
         
     }
 
     @FXML
     private void vorige(ActionEvent event) {
+        Stage stage;
+            stage = (Stage) btnVorige.getScene().getWindow();
+            
+            Scene scene = new Scene(new StartPazaakschermController(this.dc));
+        
+            stage.setScene(scene);
+            stage.show();
     }
     
    

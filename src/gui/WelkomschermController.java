@@ -27,12 +27,12 @@ public class WelkomschermController extends GridPane{
     @FXML
     private TextField txtTest;
 
-    private DomeinController domeinController;
+    private final DomeinController domeinController;
    
 
     public WelkomschermController() {  
 
-        
+        this.domeinController = new DomeinController();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Welkomscherm.fxml"));
         loader.setRoot(this);
         loader.setController(this);

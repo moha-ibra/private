@@ -40,13 +40,5 @@
       <DatePicker fx:id="pckrGeboortejaar" promptText="JJJJ" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <Button fx:id="btnSubmit" mnemonicParsing="false" onAction="#maakSpeler" text="Submit" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
       <Button fx:id="btnVorige" mnemonicParsing="false" onAction="#vorige" text="Vorige" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-      <Label fx:id="lbSpelerAangemaakt" text="Speler aangemaakt" visible="false" GridPane.columnSpan="2" GridPane.valignment="BOTTOM">
-         <padding>
-            <Insets left="5.0" />
-         </padding>
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Label>
    </children>
 </fx:root>
