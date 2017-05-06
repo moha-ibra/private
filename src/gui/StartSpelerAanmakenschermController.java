@@ -18,6 +18,8 @@ import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
 import javafx.stage.Stage;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 
 public class StartSpelerAanmakenschermController extends GridPane {
@@ -53,6 +55,16 @@ public class StartSpelerAanmakenschermController extends GridPane {
         }
         
        
+        Locale currentLocale = Locale.getDefault();                       
+        ResourceBundle messages;
+        messages = ResourceBundle.getBundle("resources.UiBundle", currentLocale);
+        
+        lbTitel.setText(messages.getString("lbNewPlayerTitel"));
+        lbNaam.setText(messages.getString("lbNaam"));
+        lbGeboorte.setText(messages.getString("lbGeboorte"));
+        btnSubmit.setText(messages.getString("btnSubmit"));
+        btnVorige.setText(messages.getString("bntVorige"));
+        
         
     }
     

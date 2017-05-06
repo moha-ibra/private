@@ -31,6 +31,7 @@ public class WelkomschermController extends GridPane{
    
 
     public WelkomschermController() {  
+        
 
         this.domeinController = new DomeinController();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Welkomscherm.fxml"));

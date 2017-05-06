@@ -14,6 +14,7 @@ import javafx.scene.layout.GridPane;
 import domein.DomeinController;
 import java.io.IOException;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class StartPazaakschermController extends GridPane {
 
@@ -30,6 +31,9 @@ public class StartPazaakschermController extends GridPane {
 
     public StartPazaakschermController(DomeinController domeinController){
         
+        
+ 
+
         this.dc = domeinController;
         
         FXMLLoader loader =  new FXMLLoader(getClass().getResource("StartPazaakscherm.fxml"));
@@ -40,6 +44,14 @@ public class StartPazaakschermController extends GridPane {
         }catch(IOException ex){
             throw new RuntimeException(ex);
         }
+        
+        Locale currentLocale = Locale.getDefault();                       
+        ResourceBundle messages;
+        messages = ResourceBundle.getBundle("resources.UiBundle", currentLocale);
+        
+        btnNieuweSpeler.setText(messages.getString("menu1"));
+        btnNieuweWedstrijd.setText(messages.getString("menu2"));
+        btnLaadWedstrijd.setText(messages.getString("menu3"));
     
     }
 

@@ -18,6 +18,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * FXML Controller class
@@ -38,6 +40,12 @@ public class SpelerSuccesvolAangemaaktSchermController extends GridPane {
     private TextArea txtStartstapel;
     @FXML
     private Button btnOK;
+    @FXML
+    private Label lbLabelNaam;
+    @FXML
+    private Label lbLabelKrediet;
+    @FXML
+    private Label lbLabelStartstapel;
     
 
     public SpelerSuccesvolAangemaaktSchermController(DomeinController dc) {
@@ -51,6 +59,15 @@ public class SpelerSuccesvolAangemaaktSchermController extends GridPane {
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
+        
+        Locale currentLocale = Locale.getDefault();                       
+        ResourceBundle messages;
+        messages = ResourceBundle.getBundle("resources.UiBundle", currentLocale);
+        
+        lbLabelNaam.setText(messages.getString("lbNaam"));
+        lbLabelKrediet.setText(messages.getString("lbKrediet"));
+        lbLabelStartstapel.setText(messages.getString("lbStartstapel"));
+        
         
         List<String> info = dc.geefInfoSpeler();
         lbNaam.setText(info.get(0));
