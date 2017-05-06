@@ -19,12 +19,12 @@ public class StartPazaakschermController extends GridPane {
 
     @FXML
     private Button btnNieuweSpeler;
-    @FXML
-    private Button btnNieuweWadstrijd;
+    
     @FXML
     private Button btnLaadWedstrijd;
+        
     @FXML
-    private TextField txtStartKeuze;
+    private Button btnNieuweWedstrijd;
     
     private final DomeinController dc;
 
@@ -71,7 +71,7 @@ public class StartPazaakschermController extends GridPane {
     private void startSpelerAanmaken(ActionEvent event) {
       
         Stage stage; 
-        stage = (Stage) btnNieuweWadstrijd.getScene().getWindow();
+        stage = (Stage) btnNieuweWedstrijd.getScene().getWindow();
         Scene scene = new Scene(new StartSpelerAanmakenschermController(this.dc));
         
         stage.setScene(scene);

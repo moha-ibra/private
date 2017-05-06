@@ -71,6 +71,10 @@ public class StartSpelerAanmakenschermController extends GridPane {
         
         
     }
+
+    @FXML
+    private void vorige(ActionEvent event) {
+    }
     
    
 
