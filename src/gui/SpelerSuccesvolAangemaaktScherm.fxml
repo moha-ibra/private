@@ -3,13 +3,13 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="328.0" prefWidth="540.0" type="GridPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" >
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="328.0" prefWidth="540.0" type="GridPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="265.0" minWidth="10.0" prefWidth="112.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="428.0" minWidth="10.0" prefWidth="428.0" />
@@ -45,7 +45,6 @@
                   <Insets left="5.0" />
                </GridPane.margin>
             </Label>
-            <TextArea fx:id="txtStartstapel" prefHeight="200.0" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Button fx:id="btnOK" mnemonicParsing="false" onAction="#terugNaarPazaakScherm" text="OK" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
                <opaqueInsets>
                   <Insets />
@@ -56,5 +55,6 @@
             </Button>
             <Label fx:id="lbNaam" text="Naam" GridPane.columnIndex="1" />
             <Label fx:id="lbKrediet" text="Krediet" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <ListView fx:id="lstStartstapel" orientation="HORIZONTAL" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
 </fx:root>

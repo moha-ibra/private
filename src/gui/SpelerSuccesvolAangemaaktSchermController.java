@@ -20,6 +20,8 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.scene.control.ListView;
 
 /**
  * FXML Controller class
@@ -45,7 +47,7 @@ public class SpelerSuccesvolAangemaaktSchermController extends GridPane {
     @FXML
     private Label lbLabelKrediet;
     @FXML
-    private Label lbLabelStartstapel;
+    private ListView lstStartstapel;
     
 
     public SpelerSuccesvolAangemaaktSchermController(DomeinController dc) {
@@ -66,23 +68,11 @@ public class SpelerSuccesvolAangemaaktSchermController extends GridPane {
         
         lbLabelNaam.setText(messages.getString("lbNaam"));
         lbLabelKrediet.setText(messages.getString("lbKrediet"));
-        lbLabelStartstapel.setText(messages.getString("lbStartstapel"));
-        
         
         List<String> info = dc.geefInfoSpeler();
         lbNaam.setText(info.get(0));
         lbKrediet.setText(info.get(1));
-        
-        List<String> kaarten = dc.geefKaarten();
-        StringBuilder kaartenOmschrijving = new StringBuilder();
-        kaarten.forEach((omschrijving)->{
-            kaartenOmschrijving.append(omschrijving);
-            kaartenOmschrijving.append("\n");
-        });
-        
-        txtStartstapel.setText(kaartenOmschrijving.toString());
-        
-        
+        lstStartstapel.setItems(FXCollections.observableArrayList(dc.geefKaarten()));    
     }
     
     @FXML
