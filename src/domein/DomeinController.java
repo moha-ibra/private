@@ -137,8 +137,21 @@ public class DomeinController {
        
        String alleKaarten = String.join(" ,", kaarten);
        situatie = String.format("\nSpeler aan beurt: %s Score: %d\n%s", this.wedstrijdspeler.getNaam(), this.wedstrijdspeler.geefSetScore(), alleKaarten);               
-       return situatie;
+       return situatie;  
+    }
+    
+    public List<String> toonWedstrijdSituatie2() {
+        //versie voor de GUI 
+        List<String> situatie = new ArrayList<>();
+        WedstrijdSpeler sp = this.wedstrijd.geefSpelerAanDeBeurt();
+        situatie.add(sp.getNaam());
+        situatie.add(Integer.toString(sp.geefSetScore()));
+        sp.geefSpelbord().forEach((kaart)->{
+            situatie.add(kaart.toString());
+        });
         
+        return situatie;
+
     }
      
     public void beeindigBeurtSpeler() {

@@ -15,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -98,15 +99,32 @@ public class SelecteerWedstrijdstapelSchermController extends GridPane {
     
     @FXML
     private void maakWedstrijdstapel(ActionEvent event) {
-        lstWedstrijdstapel.getItems().forEach((omschrijving)-> {
-            dc.selecteerKaartVoorActieveSpeler(this.geefInterface(omschrijving.toString()));
-        });
+        int aantal = this.dc.geefAantalSelectieKaarten();
+      
+        if(lstWedstrijdstapel.getItems().size() != aantal) {
+            Alert alert;
+            alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Selecteer juiste aantal kaarten.");
+            alert.setContentText(String.format("Selecteer %d kaarten om een wedstrijdstapel te maken.", aantal));
+            alert.showAndWait();
+        }
+        else {
         
-        Stage stage;
-        stage = (Stage) btnSubmit.getScene().getWindow();
-        Scene scene = new Scene(new SpelersZonderWedstrijdstapelSchermController(this.dc));
-        stage.setScene(scene);
-        stage.show();   
+            lstWedstrijdstapel.getItems().forEach((omschrijving)-> {
+                dc.selecteerKaartVoorActieveSpeler(this.geefInterface(omschrijving.toString()));
+            });
+
+            Stage stage;
+            Scene scene;
+            stage = (Stage) btnSubmit.getScene().getWindow();
+            if(dc.geefSpelersZonderWedstrijdStapel().isEmpty()) 
+                scene = new Scene(new WedstrijdSpeelSchermController(this.dc));
+            else
+                scene = new Scene(new SpelersZonderWedstrijdstapelSchermController(this.dc));
+
+            stage.setScene(scene);
+            stage.show();  
+        }
     }  
     
     private IKaart geefInterface(String omschrijving) {

@@ -159,11 +159,7 @@ public class StartUp {
                 System.out.println("We starten een set.");
                 dc.startNieuweSet();
             }
-               
-            
-            
-            
-               
+  
             while(setWinnaarInfo == null) {
                 
                 System.out.println(dc.toonWedstrijdSituatie());
