@@ -31,9 +31,6 @@ public class StartPazaakschermController extends GridPane {
 
     public StartPazaakschermController(DomeinController domeinController){
         
-        
- 
-
         this.dc = domeinController;
         
         FXMLLoader loader =  new FXMLLoader(getClass().getResource("StartPazaakscherm.fxml"));
@@ -58,7 +55,15 @@ public class StartPazaakschermController extends GridPane {
 
     @FXML
     private void startWedstrijdAanmaken(ActionEvent event) {
-        //txtStartKeuze.setText("Start wedstrijd");
+         Stage stage;
+            
+            
+        stage = (Stage) btnNieuweWedstrijd.getScene().getWindow();
+            
+        Scene scene = new Scene(new StartWedstrijdschermController(this.dc));
+        
+        stage.setScene(scene);
+        stage.show();
         
         
         
