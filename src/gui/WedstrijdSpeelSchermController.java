@@ -6,9 +6,24 @@
 package gui;
 
 import domein.DomeinController;
+import domein.IKaart;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -18,6 +33,24 @@ import javafx.scene.layout.GridPane;
 public class WedstrijdSpeelSchermController extends GridPane {
     
     private final DomeinController dc;
+    
+    @FXML
+    private Label lbSpeler;
+    @FXML
+    private Label lbScore;
+    @FXML
+    private ListView lstSpelbord;
+    @FXML
+    private Button btnBeeindigBeurt;
+    @FXML
+    private Button btnBevries;
+    @FXML
+    private Button btnWedstrijdkaart;
+    @FXML
+    private ListView lstWedstrijdstapel;
+    @FXML
+    private Button btnSelecteer;
+    
 
     public WedstrijdSpeelSchermController(DomeinController dc) {
         this.dc = dc;
@@ -30,9 +63,97 @@ public class WedstrijdSpeelSchermController extends GridPane {
             
         } catch (IOException ex) {
             throw new RuntimeException(ex);
-        }    
+        }   
+        this.dc.startNieuweSet();
+        this.toonWedstrijdSituatie();
     }
+    
+    private void toonWedstrijdSituatie() {
+        //TODO debuggen
+        String wedstrijdWinnaar = this.dc.geefWinnaar();
+        String setWinnaar = this.dc.geefSetWinnaar();
+        
+        if(wedstrijdWinnaar != null) {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setHeaderText("Wedstrijd gedaan");
+            alert.setContentText(String.format("Wedstrijd gewonnen door %s", wedstrijdWinnaar));
+            alert.showAndWait();
+            
+            Stage stage;
+            stage = (Stage) lbSpeler.getScene().getWindow();
+            Scene scene = new Scene(new StartPazaakschermController(this.dc));
+            stage.setScene(scene);
+            stage.show();    
+        }
+        else if(setWinnaar != null) {
+            
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setHeaderText("Set gedaan");
+            alert.setContentText(String.format("Set gewonnen door %s", setWinnaar));
+            this.dc.startNieuweSet();
+        }
+        
+        List<String> situatie = this.dc.toonWedstrijdSituatie2();
+        lbSpeler.setText(String.format("Speler aan de beurt: %s", situatie.get(0)));
+        lbScore.setText(String.format("Setscore: %s", situatie.get(1)));
+        lstSpelbord.setItems(FXCollections.observableArrayList(situatie.subList(2, situatie.size())));
+        
+    }
+    
+    @FXML 
+    private void beeindigBeurt(ActionEvent event) {
+        lstWedstrijdstapel.setVisible(false);
+        btnSelecteer.setVisible(false);
+        this.dc.beeindigBeurtSpeler();
+        this.toonWedstrijdSituatie();
+        
+    }
+    @FXML
+    private void bevriesSpelbord(ActionEvent event) {
+        lstWedstrijdstapel.setVisible(false);
+        btnSelecteer.setVisible(false);
+        this.dc.bevriesSpelbordSpeler();
+        this.toonWedstrijdSituatie();
+    }
+    @FXML
+    private void speelWedstrijdkaart(ActionEvent event) {
+        
+        lstWedstrijdstapel.setVisible(true);
+        btnSelecteer.setVisible(true);
+        
+        List<IKaart> wedstrijdstapel = this.dc.geefWedstrijdstapelSpelerAanBeurt();
+        List<String> omschrijvingen = new ArrayList<>();
+        wedstrijdstapel.forEach((kaart)->{
+            omschrijvingen.add(kaart.toString());
+        });
+        lstWedstrijdstapel.setItems(FXCollections.observableArrayList(omschrijvingen));
+        
+    }
+    @FXML
+    private void wedstrijdKaartNaarSpelbord(ActionEvent event) {
+        List<IKaart> wedstrijdstapel = this.dc.geefWedstrijdstapelSpelerAanBeurt();
+        int index = lstWedstrijdstapel.getSelectionModel().getSelectedIndex();
+        IKaart kaart = wedstrijdstapel.get(index);
+       
+        if(kaart.getType() == 0) {
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setHeaderText("+- kaart");
+            alert.setContentText("Kies of deze kaart positief of negatief moet zijn.");
 
-    
-    
+            ButtonType buttonType1 = new ButtonType("+");
+            ButtonType buttonType2 = new ButtonType("-");
+            
+            Optional<ButtonType> result = alert.showAndWait();
+            if(result.get() == buttonType1) 
+                this.dc.registreerWissel(kaart, 1); 
+            else if(result.get() == buttonType2) 
+                this.dc.registreerWissel(kaart, -1);   
+        }
+        
+        this.dc.speelWedstrijdstapelKaart(kaart);
+        lstWedstrijdstapel.setVisible(false);
+        btnSelecteer.setVisible(false);
+        this.toonWedstrijdSituatie();
+        
+    }   
 }
