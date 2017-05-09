@@ -71,12 +71,14 @@ public class WedstrijdSpeelSchermController extends GridPane {
     private void toonWedstrijdSituatie() {
         //TODO debuggen
         String wedstrijdWinnaar = this.dc.geefWinnaar();
+        System.out.println(wedstrijdWinnaar);
         String setWinnaar = this.dc.geefSetWinnaar();
+        System.out.println(String.format("SetWinnaar: %s", setWinnaar));
         
         if(wedstrijdWinnaar != null) {
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setHeaderText("Wedstrijd gedaan");
-            alert.setContentText(String.format("Wedstrijd gewonnen door %s", wedstrijdWinnaar));
+            alert.setContentText(wedstrijdWinnaar);
             alert.showAndWait();
             
             Stage stage;
@@ -90,10 +92,12 @@ public class WedstrijdSpeelSchermController extends GridPane {
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setHeaderText("Set gedaan");
             alert.setContentText(String.format("Set gewonnen door %s", setWinnaar));
+            alert.showAndWait();
             this.dc.startNieuweSet();
         }
         
         List<String> situatie = this.dc.toonWedstrijdSituatie2();
+        System.out.println(this.dc.toonWedstrijdSituatie());
         lbSpeler.setText(String.format("Speler aan de beurt: %s", situatie.get(0)));
         lbScore.setText(String.format("Setscore: %s", situatie.get(1)));
         lstSpelbord.setItems(FXCollections.observableArrayList(situatie.subList(2, situatie.size())));
@@ -142,11 +146,12 @@ public class WedstrijdSpeelSchermController extends GridPane {
 
             ButtonType buttonType1 = new ButtonType("+");
             ButtonType buttonType2 = new ButtonType("-");
+            alert.getButtonTypes().setAll(buttonType1, buttonType2);
             
             Optional<ButtonType> result = alert.showAndWait();
             if(result.get() == buttonType1) 
                 this.dc.registreerWissel(kaart, 1); 
-            else if(result.get() == buttonType2) 
+            else 
                 this.dc.registreerWissel(kaart, -1);   
         }
         
