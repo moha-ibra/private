@@ -21,7 +21,10 @@ import javafx.stage.Stage;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * FXML Controller class
@@ -49,7 +52,6 @@ public class SpelerSuccesvolAangemaaktSchermController extends GridPane {
     @FXML
     private ListView lstStartstapel;
     
-
     public SpelerSuccesvolAangemaaktSchermController(DomeinController dc) {
         this.dc = dc;
         
@@ -72,7 +74,22 @@ public class SpelerSuccesvolAangemaaktSchermController extends GridPane {
         List<String> info = dc.geefInfoSpeler();
         lbNaam.setText(info.get(0));
         lbKrediet.setText(info.get(1));
+        
         lstStartstapel.setItems(FXCollections.observableArrayList(dc.geefKaarten()));    
+        lstStartstapel.setCellFactory(param -> new ListCell<String>() {
+            @Override
+            public void updateItem(String name, boolean empty) {
+                super.updateItem(name, empty);
+                if(empty) {
+                    setText(null);
+                    setGraphic(null);
+                }
+                else {  
+                    setText(null);
+                    setGraphic(StartUpGUI.geefKaartAfbeelding(name));
+                }
+            }
+        });
     }
     
     @FXML

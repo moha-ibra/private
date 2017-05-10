@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -70,9 +71,35 @@ public class SelecteerWedstrijdstapelSchermController extends GridPane {
             omschrijvingen.add(kaart.toString());
         });
         lstStartstapel.setItems(FXCollections.observableArrayList(omschrijvingen));
+        lstStartstapel.setCellFactory(param -> new ListCell<String>() {
+            @Override
+            public void updateItem(String name, boolean empty) {
+                super.updateItem(name, empty);
+                if(empty) {
+                    setText(null);
+                    setGraphic(null);
+                }
+                else {  
+                    setText(null);
+                    setGraphic(StartUpGUI.geefKaartAfbeelding(name));
+                }
+            }
+        });
         lstWedstrijdstapel.setItems(FXCollections.observableArrayList());
-        
-        
+        lstWedstrijdstapel.setCellFactory(param -> new ListCell<String>() {
+            @Override
+            public void updateItem(String name, boolean empty) {
+                super.updateItem(name, empty);
+                if(empty) {
+                    setText(null);
+                    setGraphic(null);
+                }
+                else {  
+                    setText(null);
+                    setGraphic(StartUpGUI.geefKaartAfbeelding(name));
+                }
+            }
+        });  
     }
     
     @FXML

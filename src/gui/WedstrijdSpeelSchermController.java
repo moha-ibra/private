@@ -21,6 +21,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -101,6 +102,20 @@ public class WedstrijdSpeelSchermController extends GridPane {
         lbSpeler.setText(String.format("Speler aan de beurt: %s", situatie.get(0)));
         lbScore.setText(String.format("Setscore: %s", situatie.get(1)));
         lstSpelbord.setItems(FXCollections.observableArrayList(situatie.subList(2, situatie.size())));
+        lstSpelbord.setCellFactory(param -> new ListCell<String>() {
+            @Override
+            public void updateItem(String name, boolean empty) {
+                super.updateItem(name, empty);
+                if(empty) {
+                    setText(null);
+                    setGraphic(null);
+                }
+                else {  
+                    setText(null);
+                    setGraphic(StartUpGUI.geefKaartAfbeelding(name));
+                }
+            }
+        });
         
     }
     
@@ -131,6 +146,20 @@ public class WedstrijdSpeelSchermController extends GridPane {
             omschrijvingen.add(kaart.toString());
         });
         lstWedstrijdstapel.setItems(FXCollections.observableArrayList(omschrijvingen));
+        lstWedstrijdstapel.setCellFactory(param -> new ListCell<String>() {
+            @Override
+            public void updateItem(String name, boolean empty) {
+                super.updateItem(name, empty);
+                if(empty) {
+                    setText(null);
+                    setGraphic(null);
+                }
+                else {  
+                    setText(null);
+                    setGraphic(StartUpGUI.geefKaartAfbeelding(name));
+                }
+            }
+        });
         
     }
     @FXML

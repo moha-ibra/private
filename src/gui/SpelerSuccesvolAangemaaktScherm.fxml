@@ -55,6 +55,12 @@
             </Button>
             <Label fx:id="lbNaam" text="Naam" GridPane.columnIndex="1" />
             <Label fx:id="lbKrediet" text="Krediet" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <ListView fx:id="lstStartstapel" orientation="HORIZONTAL" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <ListView fx:id="lstStartstapel" orientation="HORIZONTAL" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <GridPane.margin>
+            <Insets right="5.0" />
+         </GridPane.margin></ListView>
          </children>
 </fx:root>
